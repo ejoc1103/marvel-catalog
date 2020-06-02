@@ -1,0 +1,13 @@
+body {
+  background-color: #4e4d5c;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-brick-wall.png");
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-between;
+  padding: 10% 6%;
+}
