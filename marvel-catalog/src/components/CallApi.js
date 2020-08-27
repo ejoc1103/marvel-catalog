@@ -3,40 +3,69 @@ import DisplayPage from "./DisplayPage";
 import DisplayList from "./DisplayList";
 import Search from "./Search";
 import axios from "axios";
+import { useRouteMatch } from "react-router-dom";
 import { timestamp, publicKey, hash } from "../utils";
 
-const CallApi = (props) => {
-  const [comics, callComics] = useState([]);
+const CallApi = () => {
+  const { url } = useRouteMatch();
+  const [comics, setComics] = useState([]);
+  const [loading, setLoading] = useState();
   const [page, setPage] = useState(0);
   const [params, setParams] = useState({
     type: "",
     search: "",
   });
-  const limit = 18;
-  const type = props.apiParam;
-  console.log(params.type);
+  const [order, setOrder] = useState("");
+  const [limit, setLimit] = useState(5);
+
   useEffect(() => {
-    axios
-      .get(
-        `http://gateway.marvel.com/v1/public/${props.apiParam}?${
+    const fetchData = async () => {
+      setLoading(true);
+      const result = await axios.get(
+        `http://gateway.marvel.com/v1/public${url}?${
           params.type + params.search
-        }limit=${limit}&offset=${
+        }orderBy=${order}&limit=${limit}&offset=${
           page * limit
         }&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
-      )
-      .then((res) => {
-        console.log("Do I get called");
-        callComics(res.data.data.results);
-      });
-  }, [page, params]);
+      );
+      setComics(result.data.data.results);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [page, params, url, order, limit]);
+
+  function handleClick(event) {
+    const name = event.target.name;
+    if (name === "forward") {
+      setPage(page + 1);
+    } else if (name === "back" && page !== 0) {
+      setPage(page - 1);
+    } else if (page === 0) {
+      console.log("Do nada");
+    }
+  }
 
   return (
     <>
-      <Search createSearch={setParams} searchType={props.apiParam} />
-      {type === "creators" ? (
-        <DisplayList data={comics} changePage={setPage} currentPage={page} />
+      {loading ? (
+        <h1>Loading</h1>
       ) : (
-        <DisplayPage data={comics} changePage={setPage} currentPage={page} />
+        <div>
+          <Search
+            createSearch={setParams}
+            searchType={url}
+            setOrder={setOrder}
+            order={order}
+            setLimit={setLimit}
+          />
+
+          {url === "/creators" ? (
+            <DisplayList data={comics} param={url} handleClick={handleClick} />
+          ) : (
+            <DisplayPage data={comics} param={url} handleClick={handleClick} />
+          )}
+        </div>
       )}
     </>
   );

@@ -1,46 +1,28 @@
 import React, { useState } from "react";
 import ChangePage from "./ChangePage";
+import { Link } from "react-router-dom";
 
-const DisplayList = (props) => {
-  const [nameToggle, displayName] = useState(false);
-
-  function handleClick(event) {
-    const name = event.target.name;
-    if (name === "forward") {
-      props.changePage(props.currentPage + 1);
-    } else if (name === "back") {
-      props.changePage(props.currentPage - 1);
-    }
-  }
-  function handleMouseOver() {
-    displayName(!nameToggle);
-  }
-
+const DisplayList = ({ data, param, handleClick }) => {
   return (
     <>
-      <ol>
-        {props.data.map((name) => {
+      <div className="container">
+        {data.map((name) => {
           return (
-            <li key={name.id}>
-              <div>
-                <img
-                  src={
-                    name.thumbnail.path +
-                    "/portrait_small." +
-                    name.thumbnail.extension
-                  }
-                  alt={`Pic of ${name.name}`}
-                  onMouseOver={handleMouseOver}
-                  onMouseOut={handleMouseOver}
-                />
-              </div>
-              <h1 onMouseOver={handleMouseOver} onMouseOut={handleMouseOver}>
-                {nameToggle ? name.fullName : name.fullName.substring(0, 8)}
-              </h1>
-            </li>
+            <div className="creator" key={name.id}>
+              <Link
+                to={{
+                  pathname: `/${name.id}`,
+                  state: {
+                    type: param,
+                  },
+                }}
+              >
+                {<h1>{name.fullName}</h1>}
+              </Link>
+            </div>
           );
         })}
-      </ol>
+      </div>
       <ChangePage click={handleClick} />
     </>
   );

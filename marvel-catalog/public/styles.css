@@ -11,3 +11,18 @@ body {
   align-content: space-between;
   padding: 10% 6%;
 }
+
+.book {
+  border: solid 20px black;
+}
+
+.label {
+  background: white;
+  color: black;
+}
+
+.creator {
+  background: white;
+  color: black;
+  padding: 1% 2%;
+}
