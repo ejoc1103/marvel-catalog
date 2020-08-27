@@ -30,16 +30,19 @@ const Search = (props) => {
     console.log(e.target.value);
   };
   return (
-    <>
-      <input
-        type="text"
-        placeholder="Search"
-        onChange={handleChange}
-        value={search}
-      />
-      <button type="submit" onClick={handleSubmit}>
-        Submit
-      </button>
+    <div className="search">
+      <form>
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={handleChange}
+          value={search}
+        />
+
+        <button type="submit" onClick={handleSubmit}>
+          Submit
+        </button>
+      </form>
       <select name="order" id="order" onChange={handleSelect}>
         <option value="">Select Order</option>
 
@@ -52,7 +55,7 @@ const Search = (props) => {
         <option value="10">10</option>
         <option value="20">20</option>
       </select>
-    </>
+    </div>
   );
 };
 

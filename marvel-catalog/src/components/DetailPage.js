@@ -3,11 +3,11 @@ import axios from "axios";
 import { timestamp, publicKey, hash } from "../utils";
 import { useParams, useLocation } from "react-router-dom";
 
-const DetailPage = () => {
+const DetailPage = ({ param }) => {
   const { nameId } = useParams();
   const [subject, setSubject] = useState({});
   const [imgInfo, setImgInfo] = useState({});
-
+  console.log(param + "param");
   const location = useLocation();
   const { type } = location.state;
   console.log(type);
@@ -21,8 +21,12 @@ const DetailPage = () => {
         setImgInfo(res.data.data.results[0].thumbnail);
       });
   }, [nameId]);
-
-  console.log(subject.comics);
+  let name = subject.title;
+  if (type === "/creators") {
+    name = subject.fullName;
+  } else if (type === "/characters") {
+    name = subject.name;
+  }
   return (
     <div className="container">
       <img
@@ -31,7 +35,13 @@ const DetailPage = () => {
         alt={`Pic of ${subject.name}`}
       />
       <h1>{subject.name}</h1>
-      <h3>{subject.description}</h3>
+      <h1>{subject.title}</h1>
+      <h1>{subject.fullName}</h1>
+      {subject.description ? (
+        <h3>{name}</h3>
+      ) : (
+        <h3>No Description Available</h3>
+      )}
     </div>
   );
 };

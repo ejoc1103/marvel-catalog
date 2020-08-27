@@ -27,7 +27,15 @@ const useCreateGame = (offset) => {
   characters = characters.concat(characters);
   characters.sort(() => Math.random() - 0.5);
 
-  return characters;
+  const collection = characters.map((character) => ({
+    id: character.id,
+    name: character.name,
+    front: character.thumbnail,
+    back: "back",
+    flipped: false,
+  }));
+
+  return collection;
 };
 
 export default useCreateGame;

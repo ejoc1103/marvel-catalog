@@ -7,36 +7,30 @@ import useCreateGame from "../hooks/useCreateGame";
 function MatchGame() {
   const [cards, setCards] = useState([]);
   const collection = useCreateGame(Math.floor(Math.random() * 1000));
-  useEffect(() => {
-    console.log(collection + "collection");
-    setCards(() => {
-      collection.map((character) => ({
-        id: character.id,
-        name: character.name,
-        front: character.thumbnail,
-        back: "back",
-        flipped: false,
-      }));
-    });
-    console.log(cards + "cards");
-  }, []);
 
-  const handleClick = (e) => {};
+  //   setCards(collection);  this causes too many re-renders but just using collection doesn't re-render at all so the cards don't flip
+  const handleClick = (e) => {
+    collection[e].flipped = false;
+
+    console.log(collection[e].flipped);
+  };
 
   return (
     <div>
       <h1>Match Game</h1>
-      {cards.map((card, index) => (
-        <Card
-          key={index}
-          index={index}
-          id={card.id}
-          front={card.front}
-          back="back"
-          isFlipped={card.flipped}
-          handleClick={() => handleClick(index)}
-        />
-      ))}
+      <div className="container">
+        {collection.map((card, index) => (
+          <Card
+            key={index}
+            index={index}
+            id={card.id}
+            front={card.front}
+            back="back"
+            isFlipped={true}
+            handleClick={() => handleClick(index)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

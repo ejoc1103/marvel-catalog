@@ -1,10 +1,11 @@
 import React from "react";
-
+import Navbar from "./Navbar";
 function Header() {
   return (
-    <>
-      <h2>Marvel</h2>
-    </>
+    <div>
+      <h2 className="marvel">Marvel</h2>
+      <Navbar />
+    </div>
   );
 }
 

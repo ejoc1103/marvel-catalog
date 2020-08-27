@@ -1,6 +1,16 @@
 body {
   background-color: #4e4d5c;
   background-image: url("https://www.transparenttextures.com/patterns/dark-brick-wall.png");
+  font-family: "Russo One", sans-serif;
+}
+.homeImage {
+  width: 75%;
+  height: 60%;
+  padding: 5%;
+  align: center;
+}
+.marvel {
+  font-family: "Anton", sans-serif;
 }
 
 .container {
