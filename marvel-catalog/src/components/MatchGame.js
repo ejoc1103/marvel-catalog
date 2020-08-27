@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import Header from './components/header/Header';
+
 import Card from "./Card";
-// import GameOver from './components/card/GameOver';
+
 import useCreateGame from "../hooks/useCreateGame";
 
 function MatchGame() {
