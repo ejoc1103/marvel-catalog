@@ -5,33 +5,56 @@ import { useParams, useLocation } from "react-router-dom";
 
 const DetailPage = ({ param }) => {
   const { nameId } = useParams();
-  const [subject, setSubject] = useState({});
-  const [imgInfo, setImgInfo] = useState({});
-  console.log(param + "param");
   const location = useLocation();
+
+  const [subject, setSubject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const { type } = location.state;
-  console.log(type);
+
   useEffect(() => {
-    axios
-      .get(
-        `http://gateway.marvel.com/v1/public/${type}/${nameId}?&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
-      )
-      .then((res) => {
+    const getData = async () => {
+      
+      if (error) setError(false);
+      try {
+        const res = await axios.get(
+          `http://gateway.marvel.com/v1/public/${type}/${nameId}?&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
+        );
+        console.log('loas', res);
+        setLoading(false);
         setSubject(res.data.data.results[0]);
-        setImgInfo(res.data.data.results[0].thumbnail);
-      });
+      } catch (err) {
+        console.log(err)
+        setLoading(false);
+        setError("Hey You done fucked up.");
+      }
+    };
+    getData();
   }, [nameId]);
-  let name = subject.title;
-  if (type === "/creators") {
-    name = subject.fullName;
-  } else if (type === "/characters") {
-    name = subject.name;
-  }
+
+  // discern out the name from type of parameter
+  const getName = (typeOfParam) => {
+    if (subject) {
+      if (typeOfParam === "/creators") return subject.fullName;
+      if (typeOfParam === "/characters") return subject.name;
+      return subject.title;
+    }
+  };
+
+  // get name
+  const name = getName(type);
+  if (loading || !subject) return <div>LOADING !!!</div>
+  if (error) return <div>{error}</div>
   return (
     <div className="container">
       <img
         className="book"
-        src={imgInfo.path + "/portrait_uncanny." + imgInfo.extension}
+        src={
+          subject.thumbnail.path +
+          "/portrait_uncanny." +
+          subject.thumbnail.extension
+        }
         alt={`Pic of ${subject.name}`}
       />
       <h1>{subject.name}</h1>
