@@ -5,16 +5,16 @@ import Card from "./Card";
 import useCreateGame from "../hooks/useCreateGame";
 
 function MatchGame() {
-  const [cards, setCards] = useState([]);
-  const collection = useCreateGame(Math.floor(Math.random() * 1000));
+  // const [cards, setCards] = useState(Array.from);
+  const {collection, collectionFlips, setCollectionFlips} = useCreateGame(Math.floor(Math.random() * 1000));
 
   //   setCards(collection);  this causes too many re-renders but just using collection doesn't re-render at all so the cards don't flip
-  const handleClick = (e) => {
-    collection[e].flipped = false;
-
-    console.log(collection[e].flipped);
+  const handleClick = (i) => {
+    const mutableState = [...collectionFlips];
+    mutableState[i] = !mutableState[i]
+    setCollectionFlips(mutableState);
   };
-
+  
   return (
     <div>
       <h1>Match Game</h1>
@@ -26,7 +26,7 @@ function MatchGame() {
             id={card.id}
             front={card.front}
             back="back"
-            isFlipped={true}
+            isFlipped={collectionFlips[index]}
             handleClick={() => handleClick(index)}
           />
         ))}
