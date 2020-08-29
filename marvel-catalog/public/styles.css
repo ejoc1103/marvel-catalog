@@ -36,3 +36,9 @@ body {
   color: black;
   padding: 1% 2%;
 }
+
+.cardImage {
+  height: 252px;
+  width: 168px;
+  border: solid 20px black;
+}
