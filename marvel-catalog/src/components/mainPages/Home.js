@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../images/home.jpg";
+import image from "../../images/home.jpg";
 function Home() {
   return (
     <div>

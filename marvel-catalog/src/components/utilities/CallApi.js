@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import DisplayPage from "./DisplayPage";
-import DisplayList from "./DisplayList";
+import React, { useState, useEffect, useMemo } from "react";
+import DisplayPage from "../mainPages/DisplayPage";
+import DisplayList from "../mainPages/DisplayList";
 import Search from "./Search";
 import axios from "axios";
 import { useRouteMatch } from "react-router-dom";
-import { timestamp, publicKey, hash } from "../utils";
+import { timestamp, publicKey, hash } from "../../utils";
 
 const CallApi = () => {
   const { url } = useRouteMatch();
@@ -34,6 +34,12 @@ const CallApi = () => {
 
     fetchData();
   }, [page, params, url, order, limit]);
+  
+  //Resets search params so links don't break after a search
+  const resetSearch = useMemo(() => setParams({
+    type: "",
+    search: "",
+  }), [url])
 
   function handleClick(event) {
     const name = event.target.name;

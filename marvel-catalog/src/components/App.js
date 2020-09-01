@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from "./Home";
-import Header from "./Header";
+import Home from "./mainPages/Home";
+import Header from "./utilities/Header";
 
-import DetailPage from "./DetailPage";
-import MatchGame from "./MatchGame";
-import CallApi from "./CallApi";
+import DetailPage from "./mainPages/detailPage/DetailPage";
+import MatchGame from "./matchGame/MatchGame";
+import CallApi from "./utilities/CallApi";
 const App = () => {
   return (
     <>
@@ -18,19 +18,19 @@ const App = () => {
             <Home />
           </Route>
           <Route path="/characters">
-            <CallApi titleName="name" />
+            <CallApi />
           </Route>
           <Route path="/comics">
-            <CallApi titleName="title" />
+            <CallApi />
           </Route>
           <Route path="/events">
-            <CallApi titleName="title" />
+            <CallApi />
           </Route>
           <Route path="/series">
-            <CallApi titleName="title" />
+            <CallApi />
           </Route>
           <Route path="/creators">
-            <CallApi titleName="fullName" />
+            <CallApi />
           </Route>
           <Route path="/matchgame">
             <MatchGame />

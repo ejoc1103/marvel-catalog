@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChangePage from "./ChangePage";
-import DetailPage from "./DetailPage";
+
 import { Link } from "react-router-dom";
 
 function DisplayPage(props) {

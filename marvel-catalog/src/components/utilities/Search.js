@@ -8,7 +8,8 @@ const Search = (props) => {
   };
 
   const handleSubmit = () => {
-    props.searchType === "comics" || props.searchType === "series"
+    console.log(props.searchType);
+    props.searchType === "/comics" || props.searchType === "/series"
       ? props.createSearch({
           type: "titleStartsWith=",
           search: search + "&",
@@ -42,19 +43,20 @@ const Search = (props) => {
         <button type="submit" onClick={handleSubmit}>
           Submit
         </button>
+
+        <select name="order" id="order" onChange={handleSelect}>
+          <option value="">Select Order</option>
+
+          <option value="name">Name</option>
+          <option value="modified">Modified</option>
+        </select>
+        <select name="limit" id="limit" onChange={handleLimit}>
+          <option value="">Select # per page</option>
+
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
       </form>
-      <select name="order" id="order" onChange={handleSelect}>
-        <option value="">Select Order</option>
-
-        <option value="name">Name</option>
-        <option value="modified">Modified</option>
-      </select>
-      <select name="limit" id="limit" onChange={handleLimit}>
-        <option value="">Select # per page</option>
-
-        <option value="10">10</option>
-        <option value="20">20</option>
-      </select>
     </div>
   );
 };

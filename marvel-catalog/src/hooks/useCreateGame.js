@@ -4,12 +4,11 @@ import axios from "axios";
 import { timestamp, publicKey, hash } from "../utils";
 
 const useCreateGame = (offset) => {
-  let characters = [];
   const [temp, setTemp] = useState([]);
-  const [collectionFlips, setCollectionFlips] = useState(Array.from(Array(16)));
+  const [collectionFlips, setCollectionFlips] = useState(Array.from(Array(20)));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [reset, setReset] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       if (error) setError(false);
@@ -26,12 +25,14 @@ const useCreateGame = (offset) => {
       }
     };
     fetchData();
-  }, []);
+  }, [reset]);
 
   const newArr = temp.filter(
     (char) =>
       char.thumbnail.path !==
-      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available"
+        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" &&
+      char.thumbnail.path !==
+        "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708"
   );
 
   const createCharacters = () => {
@@ -43,15 +44,26 @@ const useCreateGame = (offset) => {
     return finalSort;
   };
 
-  const memoizedValue = useMemo(() => createCharacters(newArr), [newArr[0]]);
+  const memoizedValue = useMemo(() => createCharacters(newArr), [
+    newArr[0],
+    reset,
+  ]);
 
   const collection = memoizedValue.map((character) => ({
     id: character.id,
     name: character.name,
-    front: character.thumbnail
+    front: character.thumbnail,
   }));
 
-  return { collection, collectionFlips, setCollectionFlips, loading };
+  return {
+    collection,
+    collectionFlips,
+    setCollectionFlips,
+    setReset,
+    reset,
+    loading,
+    setLoading,
+  };
 };
 
 export default useCreateGame;

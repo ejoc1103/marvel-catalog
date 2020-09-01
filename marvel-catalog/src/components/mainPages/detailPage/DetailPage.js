@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { timestamp, publicKey, hash } from "../utils";
+import { timestamp, publicKey, hash } from "../../../utils";
 import { useParams, useLocation } from "react-router-dom";
 
 const DetailPage = ({ param }) => {
