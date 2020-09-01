@@ -1,7 +1,7 @@
 import React from "react";
 import ReactCardFlip from "react-card-flip";
 import pic from "../images/Captain_America_Shield.png"
-const Card = ({ id, isFlipped, handleClick, index, front, back }) => (
+const Card = ({ id, isFlipped, handleClick, index, front }) => (
   <ReactCardFlip
     isFlipped={isFlipped}
     flipSpeedBackToFront={1}
@@ -14,6 +14,7 @@ const Card = ({ id, isFlipped, handleClick, index, front, back }) => (
     <button id={id} onClick={handleClick} key="back">
       <div>
         <img
+        className="cardImage"
           id={id}
           name={index}
           src={front.path + "/portrait_fantastic." + front.extension}

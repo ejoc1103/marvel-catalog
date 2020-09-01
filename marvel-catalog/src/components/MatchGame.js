@@ -1,60 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 
 import Card from "./Card";
 
 import useCreateGame from "../hooks/useCreateGame";
 
 function MatchGame() {
-  const { collection, collectionFlips, setCollectionFlips } = useCreateGame(
-    Math.floor(Math.random() * 1000)
-  );
-  const [count, setCount] = useState(0);
+  const {
+    collection,
+    collectionFlips,
+    setCollectionFlips,
+    loading,
+  } = useCreateGame(Math.floor(Math.random() * 1000));
+
   const [matchCounter, setMatchCounter] = useState(0);
-  const [cardOne, setCardOne] = useState(null);
-  const [cardTwo, setCardTwo] = useState(null);
-  useEffect(() => {
-    console.log("Does this get hit?");
-    const checkAnswer = () => {
-      if (cardOne && cardTwo) {
-        if (collection[cardOne].id !== collection[cardTwo].id) {
-          const mutableState = [...collectionFlips];
+  const [checkers, setCheckers] = useState([]);
 
-          mutableState[cardOne] = !mutableState[cardOne];
-          mutableState[cardTwo] = !mutableState[cardTwo];
+  const resetFlips = () => {
+    console.log("reset Flips");
+    const mutableState = [...collectionFlips];
 
-          setCollectionFlips(mutableState);
-        } else {
-          let mutableState = matchCounter;
-          mutableState++;
-          console.log(matchCounter + "Thats another match");
-          setMatchCounter(mutableState);
-        }
+    mutableState[checkers[0]] = !mutableState[checkers[0]];
+    mutableState[checkers[1]] = !mutableState[checkers[1]];
+
+    setCollectionFlips(mutableState);
+
+    setCheckers([]);
+  };
+  const checkAnswer = useMemo(() => {
+    console.log("check Answer");
+    if (checkers.length === 2) {
+      if (collection[checkers[0]].id !== collection[checkers[1]].id) {
+        setTimeout(() => {
+          resetFlips();
+        }, 2000);
       } else {
-        console.log("No card One & card two");
+        let mutableState = matchCounter;
+        mutableState++;
+        console.log(matchCounter + "Thats another match");
+        setCheckers([]);
+        setMatchCounter(mutableState);
       }
-
-
-    };
-    checkAnswer();
-    setCount(0);
-    setCardOne(null);
-    setCardTwo(null);
-  }, [cardTwo]);
-
-  const handleClick = (i) => {
-    if (count === 0) {
-      setCardOne(i);
-      setCount(1);
-    } else if (count === 1) {
-      setCardTwo(i);
     }
+  }, [checkers]);
+
+  const flipCard = (i) => {
+    const tempArr = [...checkers, i];
+    setCheckers(tempArr);
     const mutableState = [...collectionFlips];
 
     mutableState[i] = !mutableState[i];
-
-    setTimeout(setCollectionFlips(mutableState), 1000);
+    console.log("card flip");
+    setCollectionFlips(mutableState);
   };
 
+  const handleClick = (i) => {
+    flipCard(i);
+  };
+
+  if (loading) return <div>LOADING !!!</div>;
   return (
     <div>
       <h1>Match Game</h1>

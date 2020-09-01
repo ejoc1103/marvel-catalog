@@ -15,7 +15,7 @@ const useCreateGame = (offset) => {
       if (error) setError(false);
       try {
         const result = await axios.get(
-          `http://gateway.marvel.com/v1/public/characters?limit=50&offset=${offset}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
+          `http://gateway.marvel.com/v1/public/characters?limit=100&offset=${offset}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
         );
         setLoading(false);
         setTemp(result.data.data.results);
@@ -36,7 +36,7 @@ const useCreateGame = (offset) => {
 
   const createCharacters = () => {
     let characters = [...newArr].sort(() => Math.random() - 0.05);
-    characters = newArr.slice(0, 8);
+    characters = newArr.slice(0, 10);
     characters = characters.concat(characters);
     let finalSort = [...characters].sort(() => Math.random() - 0.5);
 
@@ -48,11 +48,10 @@ const useCreateGame = (offset) => {
   const collection = memoizedValue.map((character) => ({
     id: character.id,
     name: character.name,
-    front: character.thumbnail,
-    flipped: false,
+    front: character.thumbnail
   }));
 
-  return { collection, collectionFlips, setCollectionFlips };
+  return { collection, collectionFlips, setCollectionFlips, loading };
 };
 
 export default useCreateGame;
