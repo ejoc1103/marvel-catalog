@@ -3,7 +3,9 @@ import axios from "axios";
 import { timestamp, publicKey, hash } from "../../../utils";
 import { useParams, useLocation } from "react-router-dom";
 
-const DetailPage = ({ param }) => {
+
+
+const DetailPage = () => {
   const { nameId } = useParams();
   const location = useLocation();
 
@@ -47,7 +49,7 @@ const DetailPage = ({ param }) => {
   if (loading || !subject) return <div>LOADING !!!</div>;
   if (error) return <div>{error}</div>;
   return (
-    <div className="container">
+    <div >
       <img
         className="book"
         src={

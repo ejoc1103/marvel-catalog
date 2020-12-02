@@ -17,12 +17,15 @@ const CallApi = () => {
   });
   const [order, setOrder] = useState("");
   const [limit, setLimit] = useState(5);
-
+  let pathName = "/characters";
   useEffect(() => {
+    if (url !== "/") {
+      pathName = url;
+    }
     const fetchData = async () => {
       setLoading(true);
       const result = await axios.get(
-        `http://gateway.marvel.com/v1/public${url}?${
+        `http://gateway.marvel.com/v1/public${pathName}?${
           params.type + params.search
         }orderBy=${order}&limit=${limit}&offset=${
           page * limit
@@ -34,12 +37,16 @@ const CallApi = () => {
 
     fetchData();
   }, [page, params, url, order, limit]);
-  
+
   //Resets search params so links don't break after a search
-  const resetSearch = useMemo(() => setParams({
-    type: "",
-    search: "",
-  }), [url])
+  const resetSearch = useMemo(
+    () =>
+      setParams({
+        type: "",
+        search: "",
+      }),
+    [url]
+  );
 
   function handleClick(event) {
     const name = event.target.name;
@@ -69,7 +76,7 @@ const CallApi = () => {
           {url === "/creators" ? (
             <DisplayList data={comics} param={url} handleClick={handleClick} />
           ) : (
-            <DisplayPage data={comics} param={url} handleClick={handleClick} />
+            <DisplayPage data={comics} param={pathName} handleClick={handleClick} />
           )}
         </div>
       )}

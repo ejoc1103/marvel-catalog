@@ -1,5 +1,5 @@
 import React from "react";
-import ChangePage from "./ChangePage";
+import ChangePage from "../utilities/ChangePage";
 import { Link } from "react-router-dom";
 
 const DisplayList = ({ data, param, handleClick }) => {
@@ -8,7 +8,7 @@ const DisplayList = ({ data, param, handleClick }) => {
       <div className="container">
         {data.map((name) => {
           return (
-            <div className="creator" key={name.id}>
+            <div className="creator item" key={name.id}>
               <Link
                 to={{
                   pathname: `/${name.id}`,

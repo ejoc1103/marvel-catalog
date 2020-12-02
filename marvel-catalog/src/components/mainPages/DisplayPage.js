@@ -1,17 +1,27 @@
 import React, { useState } from "react";
-import ChangePage from "./ChangePage";
+import ChangePage from "../utilities/ChangePage";
 
 import { Link } from "react-router-dom";
+const pageStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+  gridGap: "20px",
+};
+
+const picStyle = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gridGap: "10px",
+};
 
 function DisplayPage(props) {
-  const [nameToggle, displayName] = useState(false);
-
+  console.log(props.param)
   return (
     <>
-      <div className="container">
+      <div style={pageStyle}>
         {props.data.map((name) => {
           return (
-            <div key={name.id}>
+            <div key={name.id} style={picStyle}>
               <div>
                 <Link
                   to={{
@@ -21,24 +31,34 @@ function DisplayPage(props) {
                     },
                   }}
                 >
-                  <img
-                    className="book"
-                    src={
-                      name.thumbnail.path +
-                      "/portrait_fantastic." +
-                      name.thumbnail.extension
-                    }
-                    alt={`Pic of ${name.name}`}
-                  />
-                  {name.fullName ? null : (
-                    <div className="label">
-                      {name.name ? (
-                        <h1>{name.name.substring(0, 8)}</h1>
-                      ) : (
-                        <h1>{name.title.substring(0, 8)}</h1>
-                      )}
-                    </div>
-                  )}
+                  <div>
+                    <img
+                      className="book"
+                      src={
+                        name.thumbnail.path +
+                        "/portrait_fantastic." +
+                        name.thumbnail.extension
+                      }
+                      alt={`Pic of ${name.name}`}
+                    />
+                  </div>
+                  <div>
+                    {name.fullName ? null : (
+                      <div>
+                        {name.name ? (
+                          <div>
+                            <h1>{name.name}</h1>
+                            <h2>{name.description}</h2>
+                          </div>
+                        ) : (
+                          <div>
+                            <h1>{name.title}</h1>
+                            <h2>{name.discription}</h2>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </Link>
               </div>
             </div>

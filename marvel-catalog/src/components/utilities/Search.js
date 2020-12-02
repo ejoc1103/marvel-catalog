@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-const Search = (props) => {
+import {useRouteMatch} from 'react-router-dom';
+const Search = ({setParams, setOrder, setLimit}) => {
   const [search, setSearch] = useState("");
-
+  const {url} = useRouteMatch();
   const handleChange = (e) => {
     const keyWord = e.target.value;
     setSearch(keyWord);
   };
 
   const handleSubmit = () => {
-    console.log(props.searchType);
-    props.searchType === "/comics" || props.searchType === "/series"
-      ? props.createSearch({
+  
+    url === "/comics" || url === "/series"
+      ? setParams({
           type: "titleStartsWith=",
           search: search + "&",
         })
-      : props.createSearch({
+      : setParams({
           type: "nameStartsWith=",
           search: search + "&",
         });
@@ -22,12 +23,12 @@ const Search = (props) => {
   };
   const handleSelect = (e) => {
     const option = e.target.value;
-    props.setOrder(option);
+    setOrder(option);
     console.log(e.target.value);
   };
   const handleLimit = (e) => {
     const option = e.target.value;
-    props.setLimit(option);
+    setLimit(option);
     console.log(e.target.value);
   };
   return (

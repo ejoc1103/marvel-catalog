@@ -3,7 +3,14 @@ import YouWon from "./YouWon";
 import Card from "./Card";
 
 import useCreateGame from "../../hooks/useCreateGame";
-// marvel-catalog\src\hooks\useCreateGame.js
+
+const pageStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(7, auto)",
+  gridTemplateRows: "repeat(4, 250px)",
+  gridGap: "10px",
+};
+
 function MatchGame() {
   const {
     collection,
@@ -87,16 +94,18 @@ function MatchGame() {
     <div>
       <h1>Match Game</h1>
       <h2>{clickCount}</h2>
-      <div className="container">
+      <div style={pageStyle}>
         {matched.length === 20 ? (
+          <div style={pageStyle}>
           <YouWon
             resetGame={resetGame}
             names={names}
             collection={collection}
             clickCount={clickCount}
           />
+          </div>
         ) : (
-          <div className="container">
+          <div style={pageStyle}>
             {collection.map((card, index) => (
               <Card
                 key={index}

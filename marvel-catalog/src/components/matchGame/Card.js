@@ -15,7 +15,7 @@ const Card = ({ id, isFlipped, handleClick, index, front, matched }) => (
         className="cardImage"
         id={id}
         name={index}
-        src={front.path + "/portrait_fantastic." + front.extension}
+        src={front.path + "/portrait_xlarge." + front.extension}
         alt={`Pic of ${front.name}`}
       ></img>
     ) : (
@@ -25,7 +25,7 @@ const Card = ({ id, isFlipped, handleClick, index, front, matched }) => (
             className="cardImage"
             id={id}
             name={index}
-            src={front.path + "/portrait_fantastic." + front.extension}
+            src={front.path + "/portrait_xlarge." + front.extension}
             alt={`Pic of ${front.name}`}
           ></img>
         </div>
