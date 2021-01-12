@@ -24,6 +24,7 @@ const CallApi = () => {
     }
     const fetchData = async () => {
       setLoading(true);
+      console.log(params.search + "search stuff");
       const result = await axios.get(
         `http://gateway.marvel.com/v1/public${pathName}?${
           params.type + params.search
@@ -66,7 +67,7 @@ const CallApi = () => {
       ) : (
         <div>
           <Search
-            createSearch={setParams}
+            setParams={setParams}
             searchType={url}
             setOrder={setOrder}
             order={order}
@@ -76,7 +77,11 @@ const CallApi = () => {
           {url === "/creators" ? (
             <DisplayList data={comics} param={url} handleClick={handleClick} />
           ) : (
-            <DisplayPage data={comics} param={pathName} handleClick={handleClick} />
+            <DisplayPage
+              data={comics}
+              param={pathName}
+              handleClick={handleClick}
+            />
           )}
         </div>
       )}

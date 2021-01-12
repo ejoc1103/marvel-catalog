@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import {useRouteMatch} from 'react-router-dom';
-const Search = ({setParams, setOrder, setLimit}) => {
+import { useRouteMatch } from "react-router-dom";
+const Search = ({ setParams, setOrder, setLimit }) => {
   const [search, setSearch] = useState("");
-  const {url} = useRouteMatch();
+  const { url } = useRouteMatch();
   const handleChange = (e) => {
     const keyWord = e.target.value;
     setSearch(keyWord);
+    console.log(url + search);
   };
 
-  const handleSubmit = () => {
-  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(setParams)
     url === "/comics" || url === "/series"
       ? setParams({
           type: "titleStartsWith=",
@@ -33,7 +35,7 @@ const Search = ({setParams, setOrder, setLimit}) => {
   };
   return (
     <div className="search">
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Search"
@@ -41,9 +43,7 @@ const Search = ({setParams, setOrder, setLimit}) => {
           value={search}
         />
 
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
 
         <select name="order" id="order" onChange={handleSelect}>
           <option value="">Select Order</option>

@@ -8,13 +8,21 @@ import DetailPage from "./mainPages/detailPage/DetailPage";
 import MatchGame from "./matchGame/MatchGame";
 import CallApi from "./utilities/CallApi";
 
+const mainStyle = {
+  display: "grid",
+  gridTemplateRows: "repeat(3, auto)",
+};
+const headerStyle = {
+  margin: "0 0 2em 0",
+};
+
 const App = () => {
   return (
     <>
       <Router>
-        <div className="main">
+        <div style={mainStyle}>
           <div>
-            <Header className="header" />
+            <Header style={headerStyle} />
           </div>
 
           <Switch>
@@ -50,15 +58,6 @@ const App = () => {
           </Switch>
         </div>
       </Router>
-      <style jsx>{`
-        .main {
-          display: grid;
-          grid-template-rows: repeat(3, auto)
-        }
-        .header {
-          margin: 0 0 2em 0;
-        }
-      `}</style>
     </>
   );
 };

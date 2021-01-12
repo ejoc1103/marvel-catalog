@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ChangePage from "../utilities/ChangePage";
 
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const picStyle = {
 };
 
 function DisplayPage(props) {
-  console.log(props.param)
+  console.log(props.param);
   return (
     <>
       <div style={pageStyle}>
