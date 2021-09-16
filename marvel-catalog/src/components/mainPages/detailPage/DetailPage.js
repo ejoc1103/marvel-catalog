@@ -3,8 +3,6 @@ import axios from "axios";
 import { timestamp, publicKey, hash } from "../../../utils";
 import { useParams, useLocation } from "react-router-dom";
 
-
-
 const DetailPage = () => {
   const { nameId } = useParams();
   const location = useLocation();
@@ -32,11 +30,11 @@ const DetailPage = () => {
       }
     };
     getData();
-  }, [nameId]);
+  }, [nameId, error, type]);
 
   console.log(subject);
   // discern out the name from type of parameter
-  const getName = (typeOfParam) => {
+  const getName = typeOfParam => {
     if (subject) {
       if (typeOfParam === "/creators") return subject.fullName;
       if (typeOfParam === "/characters") return subject.name;
@@ -49,7 +47,7 @@ const DetailPage = () => {
   if (loading || !subject) return <div>LOADING !!!</div>;
   if (error) return <div>{error}</div>;
   return (
-    <div >
+    <div>
       <img
         className="book"
         src={
