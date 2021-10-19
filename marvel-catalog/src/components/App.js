@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Info from "./mainPages/Info";
 import Header from "./utilities/Header";
-import DetailPage from "./mainPages/detailPage/DetailPage";
+import HomePage from "./mainPages/HomePage";
 import MatchGame from "./matchGame/MatchGame";
 import DisplayPage from "./mainPages/DisplayPage";
 import DisplayList from "./mainPages/DisplayList";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import DetailPage from "./mainPages/detailPage/DetailPage";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -15,31 +15,42 @@ const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  display: grid;
   background-color: #4e4d5c;
   background-image: url("https://www.transparenttextures.com/patterns/dark-brick-wall.png");
   font-family: 'Permanent Marker', cursive;
+}
+`;
+
+const MainStyled = styled.div`
+  display: grid;
   grid-template-columns: 1fr;
   justify-content: center;
-}
 `;
 
 const App = () => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState("");
-  const [limit, setLimit] = useState(5);
-
+  const [limit, setLimit] = useState(8);
+  const [page, setPage] = useState(0);
+  const [params, setParams] = useState({
+    type: "",
+    search: "",
+  });
+  const [path, setPath] = useState("/");
   return (
-    <>
+    <MainStyled>
       <GlobalStyle />
       <Router>
         <Header />
         <Switch>
-          <Route path="/info">
-            <Info />
+          <Route exact path="/">
+            <HomePage />
           </Route>
-          <Route path="/" exact>
+          <Route path="/characters/:nameId">
+            <DetailPage />
+          </Route>
+          <Route path="/characters">
             <DisplayPage
               content={content}
               setContent={setContent}
@@ -49,9 +60,17 @@ const App = () => {
               setOrder={setOrder}
               limit={limit}
               setLimit={setLimit}
+              page={page}
+              setPage={setPage}
+              params={params}
+              setParams={setParams}
+              path={path}
+              setPath={setPath}
             />
           </Route>
-
+          <Route path="/comics/:nameId">
+            <DetailPage />
+          </Route>
           <Route path="/comics">
             <DisplayPage
               content={content}
@@ -62,7 +81,16 @@ const App = () => {
               setOrder={setOrder}
               limit={limit}
               setLimit={setLimit}
+              page={page}
+              setPage={setPage}
+              params={params}
+              setParams={setParams}
+              path={path}
+              setPath={setPath}
             />
+          </Route>
+          <Route path="/events/:nameId">
+            <DetailPage />
           </Route>
           <Route path="/events">
             <DisplayPage
@@ -74,7 +102,16 @@ const App = () => {
               setOrder={setOrder}
               limit={limit}
               setLimit={setLimit}
+              page={page}
+              setPage={setPage}
+              params={params}
+              setParams={setParams}
+              path={path}
+              setPath={setPath}
             />
+          </Route>
+          <Route path="/series/:nameId">
+            <DetailPage />
           </Route>
           <Route path="/series">
             <DisplayPage
@@ -86,7 +123,16 @@ const App = () => {
               setOrder={setOrder}
               limit={limit}
               setLimit={setLimit}
+              page={page}
+              setPage={setPage}
+              params={params}
+              setParams={setParams}
+              path={path}
+              setPath={setPath}
             />
+          </Route>
+          <Route path="/creators/:nameId">
+            <DetailPage />
           </Route>
           <Route path="/creators">
             <DisplayList
@@ -98,13 +144,23 @@ const App = () => {
               setOrder={setOrder}
               limit={limit}
               setLimit={setLimit}
+              page={page}
+              setPage={setPage}
+              params={params}
+              setParams={setParams}
+              path={path}
+              setPath={setPath}
             />
           </Route>
-          <Route path="/matchgame">
-            <MatchGame />
-          </Route>
-          <Route path="/:nameId">
+          <Route path="/matchgame/:nameId">
             <DetailPage />
+          </Route>
+          <Route path="/matchgame">
+            <MatchGame
+              setContent={setContent}
+              content={content}
+              params={params}
+            />
           </Route>
 
           <Route path="*">
@@ -112,7 +168,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </>
+    </MainStyled>
   );
 };
 

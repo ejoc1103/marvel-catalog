@@ -1,38 +1,51 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import YouWon from "./YouWon";
 import Card from "./Card";
+import Loading from "../mainPages/Loading";
+import styled from "styled-components";
 
 import useCreateGame from "../../hooks/useCreateGame";
 
-const pageStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(7, auto)",
-  gridTemplateRows: "repeat(4, 250px)",
-  gridGap: "10px",
-};
+const MainGameStyled = styled.div`
+  display: grid;
+  justify-content: center;
+  > h1 {
+    text-align: center;
+  }
+  > select {
+    width: 25%;
+  }
+`;
+
+const GameBoardStyled = styled.div`
+  display: grid;
+  grid-template-columns: ${({ level }) => {
+    if (level === "40") {
+      return "repeat(8, auto)";
+    } else if (level === "20") {
+      return "repeat(5, auto)";
+    } else {
+      return "repeat(4, auto)";
+    }
+  }};
+`;
 
 function MatchGame() {
-  const {
-    collection,
-    collectionFlips,
-    setCollectionFlips,
-    setReset,
-    reset,
-    setLoading,
-    loading,
-  } = useCreateGame(Math.floor(Math.random() * 1394));
-
+  const [reset, setReset] = useState(false);
+  const [collectionFlips, setCollectionFlips] = useState(Array.from(Array(20)));
   const [matched, setMatched] = useState([]);
   const [checkers, setCheckers] = useState([]);
   const [names, setNames] = useState([]);
   const [clickCount, setClickCount] = useState(0);
-
+  const [checks, setChecks] = useState(0);
+  const [level, setLevel] = useState("20");
+  const { collection, setLoading, loading } = useCreateGame(reset, level);
+  //Reset to a new game after user clicks play again on YouWon page
   const resetGame = () => {
     console.log("Reset Game");
-    let checker = reset;
     setMatched([]);
     setCheckers([]);
-    setReset(!checker);
+    setReset(!reset);
     setCollectionFlips(Array.from(Array(20)));
     setLoading(true);
     setClickCount(0);
@@ -40,72 +53,89 @@ function MatchGame() {
   };
 
   const resetFlips = () => {
-    console.log("reset Flips");
     const mutableState = [...collectionFlips];
 
-    mutableState[checkers[0]] = !mutableState[checkers[0]];
-    mutableState[checkers[1]] = !mutableState[checkers[1]];
+    mutableState[checkers[0]] = false;
+    mutableState[checkers[1]] = false;
 
     setCollectionFlips(mutableState);
-
-    setCheckers([]);
+    setChecks(0);
   };
-  const checkAnswer = useMemo(() => {
-    console.log("check Answer");
+
+  const checkAnswer = () => {
+    setClickCount(prevState => prevState + 1);
+    if (collection[checkers[0]].id !== collection[checkers[1]].id) {
+      setTimeout(() => {
+        resetFlips();
+      }, 1200);
+
+      setCheckers([]);
+    } else {
+      let name = [];
+      name.push(checkers[0]);
+      setNames([...names, ...name]);
+      setMatched([...matched, ...checkers]);
+      setCheckers([]);
+      setChecks(0);
+    }
+  };
+  useEffect(() => {
     if (checkers.length === 2) {
-      let number = clickCount;
-      number++;
-      setClickCount(number);
-      if (collection[checkers[0]].id !== collection[checkers[1]].id) {
-        setTimeout(() => {
-          resetFlips();
-        }, 1200);
-      } else {
-        let pair = [...checkers];
-        let name = [];
-        name.push(checkers[0]);
-        setNames([...names, ...name]);
-        setMatched([...matched, ...checkers]);
+      checkAnswer();
+    }
+  });
 
-        setCheckers([]);
-      }
+  const handleClick = index => {
+    //Checks that the same card wasn't clicked twice
+    if (checkers.length === 1 && index === checkers[0]) {
+      return;
     }
-  }, [checkers]);
-  console.log(matched);
-  const flipCard = (i) => {
-    if(checkers.length === 1 && i === checkers[0]){
-      return
-    }
-    const tempArr = [...checkers, i];
+
+    setChecks(prevState => prevState + 1);
+
+    //Adds the index to the checkers
+    const tempArr = [...checkers, index];
     setCheckers(tempArr);
-    const mutableState = [...collectionFlips];
 
-    mutableState[i] = !mutableState[i];
-    console.log("card flip");
+    //Sets mutableState to collection Flips
+    const mutableState = [...collectionFlips];
+    //Flips the card at the index
+    mutableState[index] = !mutableState[index];
+    //Sets the flip in state
     setCollectionFlips(mutableState);
   };
 
-  const handleClick = (i) => {
-    flipCard(i);
+  const handleChange = e => {
+    setLevel(e.target.value);
+    resetGame();
   };
-
-  if (loading) return <div>LOADING !!!</div>;
+  if (loading) return <Loading />;
   return (
-    <div>
-      <h1>Match Game</h1>
-      <h2>{clickCount}</h2>
-      <div style={pageStyle}>
-        {matched.length === 20 ? (
-          <div style={pageStyle}>
-          <YouWon
-            resetGame={resetGame}
-            names={names}
-            collection={collection}
-            clickCount={clickCount}
-          />
+    <MainGameStyled>
+      <h1>Character Match Game</h1>
+      {matched.length !== parseInt(level) ? (
+        <>
+          <h2>Attempts: {clickCount}</h2>
+          <select name="level" id="level" onChange={handleChange} value={level}>
+            <option value="20">Normal</option>
+            <option value="12">Easy</option>
+            <option value="40">Hard</option>
+          </select>
+        </>
+      ) : null}
+
+      <div>
+        {matched.length === parseInt(level) ? (
+          <div>
+            <YouWon
+              resetGame={resetGame}
+              names={names}
+              collection={collection}
+              clickCount={clickCount}
+            />
           </div>
         ) : (
-          <div style={pageStyle}>
+          <GameBoardStyled level={level}>
             {collection.map((card, index) => (
               <Card
                 key={index}
@@ -114,14 +144,15 @@ function MatchGame() {
                 front={card.front}
                 back="back"
                 isFlipped={collectionFlips[index]}
-                handleClick={() => handleClick(index)}
+                handleClick={checks < 2 ? () => handleClick(index) : null}
                 matched={matched}
+                checkers={checkers}
               />
             ))}
-          </div>
+          </GameBoardStyled>
         )}
       </div>
-    </div>
+    </MainGameStyled>
   );
 }
 

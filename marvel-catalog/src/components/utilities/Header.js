@@ -2,29 +2,36 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const headThreeStyle = {
-  display: "inline",
-  padding: "1em",
-  color: "white",
-};
-const StyledNav = styled.nav`
+const StyledHeader = styled.nav`
   overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr;
   grid-auto-flow: dense;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   background-color: #e23636;
-  padding: 14px;
-  margin: 0 0 20em 0;
+  padding: 40px;
+
+  > h3 {
+    color: white;
+  }
+
+  .is-active {
+    color: #518cca;
+    background: #f7f6e7;
+  }
+
+  .different-active {
+    color: #504a4a;
+    text-decoration: none;
+  }
 `;
 
 const ListStyled = styled.ul`
   display: grid;
-
   width: 100%;
 
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 6fr;
   gap: 20px;
   padding-right: 20px;
   list-style-type: none;
@@ -35,89 +42,161 @@ const ListStyled = styled.ul`
   margin-right: 20px;
 
   @media (max-width: 768px) {
-    display: ${({ open }) => (open ? "grid" : "none")};
-    grid-template-columns: 1fr;
-    position: fixed;
-    background: #e23636;
-    width: 30%;
-    margin-right: 5px;
-    top: 50px;
-    right: 0;
+    display: none;
   }
 `;
 
+const MobileListStyled = styled.ul`
+  display: ${props => (props.open ? "grid" : "none")};
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+`;
+
 const ListItemStyled = styled.li`
-  display: inline;
+  display: grid;
   color: white;
   text-align: center;
 `;
 
 const MobileMenuIcon = styled.div`
-  margin: auto 0 auto auto;
-  width: 25px;
   min-width: 25px;
   padding: 5px;
+  justify-content: center;
+  justify-self: center;
   > div {
-    height: 3px;
-    background: black;
-    margin: 5px 0;
-    width: 100%;
+    text-align: center;
+    color: black;
   }
 
   @media (min-width: 768px) {
     display: none;
   }
 `;
+
+const NavLinkStyled = styled(NavLink)`
+  color: white;
+  font-size: 1.2em;
+  display: grid;
+  width: 100%;
+  justify-self: end;
+  align-self: center;
+  justify-content: center;
+  padding: 15px;
+  margin-right: 0;
+`;
+
+const HomeLinkStyled = styled(NavLink)`
+  font-size: 3em;
+  color: #a8a9ad;
+  text-decoration: none;
+  padding: 20px;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+const MobileHomeLinkStyled = styled(NavLink)`
+  display: grid;
+  text-align: center;
+  font-size: 1.8em;
+  padding: 10px;
+`;
+const NormalLinksStyled = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-self: end;
+  @media (max-width: 1150px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   console.log(menuOpen);
   return (
-    <StyledNav>
-      <h1 className="navbar-brand logo">Marvel</h1>
+    <StyledHeader>
       <MobileMenuIcon onClick={() => setMenuOpen(prevState => !prevState)}>
-        <div />
-        <div />
-        <div />
+        <MobileHomeLinkStyled exact to="/" activeClassName="different-active">
+          <h1>Marvel</h1>
+        </MobileHomeLinkStyled>
+        <div>{menuOpen ? <h2>Close Menu</h2> : <h2>Open Menu</h2>}</div>
+        <MobileListStyled open={menuOpen}>
+          <ListItemStyled>
+            <NavLinkStyled to="/characters" activeClassName="is-active">
+              <h3>Characters</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/comics" activeClassName="is-active">
+              <h3>Comics</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/events" activeClassName="is-active">
+              <h3>Events</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/series" activeClassName="is-active">
+              <h3>Series</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/creators" activeClassName="is-active">
+              <h3>Creators</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/matchgame" activeClassName="is-active">
+              <h3>Matching Game</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+        </MobileListStyled>
       </MobileMenuIcon>
 
       <ListStyled open={menuOpen}>
         <ListItemStyled>
-          <NavLink to="/" style={{ textDecoration: "none" }}>
-            <h3>Characters</h3>
-          </NavLink>
+          <HomeLinkStyled
+            exact
+            to="/"
+            activeClassName="different-active"
+            open={menuOpen}
+          >
+            <h1>Marvel</h1>
+          </HomeLinkStyled>
         </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/comics" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>Comics</h3>
-          </NavLink>
-        </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/events" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>Events</h3>
-          </NavLink>
-        </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/series" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>Series</h3>
-          </NavLink>
-        </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/creators" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>Creators</h3>
-          </NavLink>
-        </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/matchgame" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>Matching Game</h3>
-          </NavLink>
-        </ListItemStyled>
-        <ListItemStyled>
-          <NavLink to="/info" style={{ textDecoration: "none" }}>
-            <h3 style={headThreeStyle}>More Info</h3>
-          </NavLink>
-        </ListItemStyled>
+        <NormalLinksStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/characters" activeClassName="is-active">
+              <h3>Characters</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/comics" activeClassName="is-active">
+              <h3>Comics</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/events" activeClassName="is-active">
+              <h3>Events</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/series" activeClassName="is-active">
+              <h3>Series</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/creators" activeClassName="is-active">
+              <h3>Creators</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <NavLinkStyled to="/matchgame" activeClassName="is-active">
+              <h3>Matching Game</h3>
+            </NavLinkStyled>
+          </ListItemStyled>
+        </NormalLinksStyled>
       </ListStyled>
-    </StyledNav>
+    </StyledHeader>
   );
 };
 
