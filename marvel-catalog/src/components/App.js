@@ -37,7 +37,7 @@ const App = () => {
     type: "",
     search: "",
   });
-  const [path, setPath] = useState("/");
+  const [contentType, setContentType] = useState("");
   return (
     <MainStyled>
       <GlobalStyle />
@@ -64,8 +64,7 @@ const App = () => {
               setPage={setPage}
               params={params}
               setParams={setParams}
-              path={path}
-              setPath={setPath}
+              setContentType={setContentType}
             />
           </Route>
           <Route path="/comics/:nameId">
@@ -85,8 +84,7 @@ const App = () => {
               setPage={setPage}
               params={params}
               setParams={setParams}
-              path={path}
-              setPath={setPath}
+              setContentType={setContentType}
             />
           </Route>
           <Route path="/events/:nameId">
@@ -106,8 +104,7 @@ const App = () => {
               setPage={setPage}
               params={params}
               setParams={setParams}
-              path={path}
-              setPath={setPath}
+              setContentType={setContentType}
             />
           </Route>
           <Route path="/series/:nameId">
@@ -127,8 +124,7 @@ const App = () => {
               setPage={setPage}
               params={params}
               setParams={setParams}
-              path={path}
-              setPath={setPath}
+              setContentType={setContentType}
             />
           </Route>
           <Route path="/creators/:nameId">
@@ -148,8 +144,8 @@ const App = () => {
               setPage={setPage}
               params={params}
               setParams={setParams}
-              path={path}
-              setPath={setPath}
+              contentType={contentType}
+              setContentType={setContentType}
             />
           </Route>
           <Route path="/matchgame/:nameId">

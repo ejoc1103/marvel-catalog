@@ -3,26 +3,46 @@ import ReactCardFlip from "react-card-flip";
 import pic from "../../images/Captain_America_Shield.png";
 import styled from "styled-components";
 
+//Uses the react-card-flip npm package to flip cards that have characters
+//on one side and a stock photo for the backs
+
 const ImgStyled = styled.img`
-  width: 50px;
-  height: 100px;
+  width: ${({ level }) => {
+    return level === "40" ? "25px" : "50px";
+  }};
+  height: ${({ level }) => {
+    return level === "40" ? "80px" : "100px";
+  }};
   @media (min-width: 600px) {
-    width: 100px;
-    height: 150px;
+    width: ${({ level }) => {
+      return level === "40" ? "75px" : "100px";
+    }};
+    height: ${({ level }) => {
+      return level === "40" ? "130px" : "150px";
+    }};
   }
   @media (min-width: 768px) {
-    width: 150px;
-    height: 200px;
+    width: ${({ level }) => {
+      return level === "40" ? "130px" : "150px";
+    }};
+    height: ${({ level }) => {
+      return level === "40" ? "180px" : "200px";
+    }};
   }
 `;
-const Card = ({ id, isFlipped, handleClick, index, front, matched }) => (
+const Card = ({ id, isFlipped, handleClick, index, front, matched, level }) => (
   <ReactCardFlip
     isFlipped={isFlipped}
     flipSpeedBackToFront={1}
     flipSpeedFrontToBack={1}
   >
     <button id={id} onClick={handleClick} key="front">
-      <ImgStyled src={pic} alt="back of card" className="cardImage" />
+      <ImgStyled
+        src={pic}
+        alt="back of card"
+        className="cardImage"
+        level={level}
+      />
     </button>
     {matched.includes(index) ? (
       <ImgStyled
@@ -31,6 +51,7 @@ const Card = ({ id, isFlipped, handleClick, index, front, matched }) => (
         name={index}
         src={front.path + "/portrait_xlarge." + front.extension}
         alt={`Pic of ${front.name}`}
+        level={level}
       ></ImgStyled>
     ) : (
       <button id={id} onClick={handleClick} key="back">
@@ -41,6 +62,7 @@ const Card = ({ id, isFlipped, handleClick, index, front, matched }) => (
             name={index}
             src={front.path + "/portrait_xlarge." + front.extension}
             alt={`Pic of ${front.name}`}
+            level={level}
           ></ImgStyled>
         </div>
       </button>

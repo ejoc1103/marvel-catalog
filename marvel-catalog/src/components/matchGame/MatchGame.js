@@ -14,6 +14,12 @@ const MainGameStyled = styled.div`
   }
   > select {
     width: 25%;
+    margin: 0 0 20px 0;
+  }
+  > button {
+    width: 25%;
+    margin: 20px 0 20px 0;
+    padding: 5px;
   }
 `;
 
@@ -21,13 +27,14 @@ const GameBoardStyled = styled.div`
   display: grid;
   grid-template-columns: ${({ level }) => {
     if (level === "40") {
-      return "repeat(8, auto)";
+      return "repeat(10, auto)";
     } else if (level === "20") {
       return "repeat(5, auto)";
     } else {
       return "repeat(4, auto)";
     }
   }};
+  padding-bottom: 40px;
 `;
 
 function MatchGame() {
@@ -51,7 +58,7 @@ function MatchGame() {
     setClickCount(0);
     setNames([]);
   };
-
+  //Flips the cards back over if you didn't get a match
   const resetFlips = () => {
     const mutableState = [...collectionFlips];
 
@@ -61,6 +68,9 @@ function MatchGame() {
     setCollectionFlips(mutableState);
     setChecks(0);
   };
+
+  //Checks to see if the two cards you chose match and then either flips
+  //The cards back over if they didn't or leaves them and adds them to the matched array
 
   const checkAnswer = () => {
     setClickCount(prevState => prevState + 1);
@@ -79,6 +89,7 @@ function MatchGame() {
       setChecks(0);
     }
   };
+  //calls the checkAnser function after you have selected two cards
   useEffect(() => {
     if (checkers.length === 2) {
       checkAnswer();
@@ -105,6 +116,8 @@ function MatchGame() {
     setCollectionFlips(mutableState);
   };
 
+  //function to handle when you chose the level you wish to play the game at and then resets the
+  //game in case you start on a harder level and change mid game
   const handleChange = e => {
     setLevel(e.target.value);
     resetGame();
@@ -112,10 +125,12 @@ function MatchGame() {
   if (loading) return <Loading />;
   return (
     <MainGameStyled>
-      <h1>Character Match Game</h1>
+      <h1 level={level}>Character Match Game</h1>
+
       {matched.length !== parseInt(level) ? (
         <>
           <h2>Attempts: {clickCount}</h2>
+          <button onClick={() => resetGame()}>Reset Game</button>
           <select name="level" id="level" onChange={handleChange} value={level}>
             <option value="20">Normal</option>
             <option value="12">Easy</option>
@@ -147,6 +162,7 @@ function MatchGame() {
                 handleClick={checks < 2 ? () => handleClick(index) : null}
                 matched={matched}
                 checkers={checkers}
+                level={level}
               />
             ))}
           </GameBoardStyled>

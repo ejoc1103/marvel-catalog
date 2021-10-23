@@ -9,7 +9,6 @@ const callApi = (
   order,
   page,
   params,
-  setParams
 ) => {
   const fetchData = async () => {
     setLoading(true);

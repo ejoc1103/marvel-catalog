@@ -7,9 +7,11 @@ const ChangePageStyled = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   > button {
-    width: 200px;
+    width: 350px;
+    height: 60px;
     border-radius: 15%;
-    background-color: #f78f3f;
+    background-color: #e23636;
+    font-size: 2em;
   }
 
   @media (max-width: 600px) {

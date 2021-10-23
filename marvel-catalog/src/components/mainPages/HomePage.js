@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import photo from "../../images/homepagephoto.jpg";
+
 const HomePageStyled = styled.div`
   display: grid;
   justify-content: center;

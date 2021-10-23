@@ -5,7 +5,9 @@ import Search from "../utilities/Search";
 import Loading from "../mainPages/Loading";
 import callApi from "../utilities/callApi";
 import { NavLink, useLocation } from "react-router-dom";
+//Main component for showing the collections on everthing but creators
 
+//Styles with styled components
 const PageStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -57,18 +59,21 @@ function DisplayPage({
   setPage,
   params,
   setParams,
-  setPath,
+  setContentType,
 }) {
   const { pathname } = useLocation();
 
+  //Resets the search type and ordering selection to avoid errors when switching
+  //between collections
   useEffect(() => {
     setOrder("");
     setParams({
       type: "",
       search: "",
     });
-  }, [setOrder, pathname, setParams]);
-
+    setPage(0);
+  }, [setOrder, pathname, setParams, setPage]);
+  //call the function that calls the api to get characters, comics ...
   useEffect(() => {
     callApi(
       pathname,
@@ -80,7 +85,7 @@ function DisplayPage({
       params,
       setParams
     );
-    setPath(pathname);
+    setContentType(pathname);
   }, [
     limit,
     order,
@@ -89,18 +94,20 @@ function DisplayPage({
     setLoading,
     page,
     params,
-    setPath,
     setParams,
+    setContentType,
   ]);
 
+  //function for changing pages
   function handleClick(event) {
     const name = event.target.name;
+    if (page !== 0) {
+      if (name === "back" && page !== 0) {
+        setPage(page - 1);
+      }
+    }
     if (name === "forward") {
       setPage(page + 1);
-    } else if (name === "back" && page !== 0) {
-      setPage(page - 1);
-    } else if (page === 0) {
-      console.log("Do nada");
     }
   }
   if (loading) return <Loading />;

@@ -19,6 +19,7 @@ const StyledHeader = styled.nav`
   .is-active {
     color: #518cca;
     background: #f7f6e7;
+    margin: 20px;
   }
 
   .different-active {
@@ -88,6 +89,7 @@ const NavLinkStyled = styled(NavLink)`
 const HomeLinkStyled = styled(NavLink)`
   font-size: 3em;
   color: #a8a9ad;
+  margin: 20px;
   text-decoration: none;
   padding: 20px;
   @media (max-width: 768px) {

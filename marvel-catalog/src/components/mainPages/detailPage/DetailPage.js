@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { timestamp, publicKey, hash } from "../../../utils";
 import { useLocation } from "react-router-dom";
 
+
+//Styled Components
 const DetailPageStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -39,10 +41,13 @@ const NameDescStyled = styled.div`
 `;
 
 const DetailPage = () => {
+  //state setup
   const [subject, setSubject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //path pulled from location hook
   const { pathname } = useLocation();
+  //Get's data for specific selection when pulling the detail page
   useEffect(() => {
     const getData = async () => {
       if (error) setError(false);
@@ -70,72 +75,81 @@ const DetailPage = () => {
       return subject.title;
     }
   };
-  // get name
+  
   const name = getName(pathname);
+
   if (loading || !subject) return <Loading />;
   if (error) return <div>{error}</div>;
   return (
     <DetailPageStyled>
-      <div>
-        <img
-          className="book"
-          src={
-            subject.thumbnail.path +
-            "/portrait_uncanny." +
-            subject.thumbnail.extension
-          }
-          alt={`Pic of ${subject.name}`}
-        />
-      </div>
-      <NameDescStyled>
-        <h1>{name}</h1>
-        <div>{subject.description ? <p>{subject.description}</p> : null}</div>
-      </NameDescStyled>
-
-      {subject.comics ? (
+      <>
         <div>
-          <h1>Comics</h1>
-          {subject.comics.items.map((item, index) => (
-            <h2 key={index}>{item.name}</h2>
-          ))}
+          <img
+            className="book"
+            src={
+              subject.thumbnail.path +
+              "/portrait_uncanny." +
+              subject.thumbnail.extension
+            }
+            alt={`Pic of ${subject.name}`}
+          />
         </div>
-      ) : null}
-
-      {subject.events.length > 0 ? (
-        <div>
-          <h1>Events</h1>
-          {subject.events.items.map((item, index) => (
-            <h2 key={index}>{item.name}</h2>
-          ))}{" "}
-        </div>
-      ) : null}
-
-      {subject.series ? (
-        <div>
-          {subject.series.name ? (
-            <div>
-              <h1>Series</h1>
-              <h2>{subject.series.name}</h2>
-            </div>
-          ) : (
-            <div>
-              <h1>Series</h1>
-              {subject.series.items.map((item, index) => (
-                <h2 key={index}>{item.name}</h2>
-              ))}
-            </div>
-          )}
-        </div>
-      ) : null}
-
-      {subject.stories ? (
-        <div>
-          <h1>Stories</h1>
-          {subject.stories.items.map((item, index) => (
-            <h2 key={index}>{item.name}</h2>
-          ))}
-        </div>
-      ) : null}
+        <NameDescStyled>
+          <h1>{name}</h1>
+          <div>
+            {subject.description ? (
+              <p>{subject.description}</p>
+            ) : (
+              <p>No Description Currently Available</p>
+            )}
+          </div>
+        </NameDescStyled>
+        {subject.comics ? (
+          <div>
+            <h1>Comics</h1>
+            {subject.comics.items.map((item, index) => (
+              <h2 key={index}>{item.name}</h2>
+            ))}
+          </div>
+        ) : null}
+        {subject.events ? (
+          <>
+            {subject.events.length > 0 ? (
+              <div>
+                <h1>Events</h1>
+                {subject.events.items.map((item, index) => (
+                  <h2 key={index}>{item.name}</h2>
+                ))}{" "}
+              </div>
+            ) : null}
+          </>
+        ) : null}
+        {subject.series ? (
+          <div>
+            {subject.series.name ? (
+              <div>
+                <h1>Series</h1>
+                <h2>{subject.series.name}</h2>
+              </div>
+            ) : (
+              <div>
+                <h1>Series</h1>
+                {subject.series.items.map((item, index) => (
+                  <h2 key={index}>{item.name}</h2>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
+        {subject.stories ? (
+          <div>
+            <h1>Stories</h1>
+            {subject.stories.items.map((item, index) => (
+              <h2 key={index}>{item.name}</h2>
+            ))}
+          </div>
+        ) : null}{" "}
+      </>
     </DetailPageStyled>
   );
 };
