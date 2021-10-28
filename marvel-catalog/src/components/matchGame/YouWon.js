@@ -43,7 +43,7 @@ const PageStyled = styled.div`
 const WinnerBannerStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  background: #518cca;
+  background: ${({ theme }) => theme.primary};
   justify-self: center;
   text-align: center;
   justify-content: center;

@@ -18,6 +18,7 @@ const HomePageStyled = styled.div`
 const ImageStyled = styled.img`
   width: 80%;
   justify-self: center;
+  margin-bottom: 40px;
 `;
 
 const HomePage = () => {

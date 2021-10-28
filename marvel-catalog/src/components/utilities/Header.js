@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
+import { useLocation } from "react-router-dom";
+import Toggle from "./Toggle";
 
 const StyledHeader = styled.nav`
   overflow: hidden;
@@ -9,7 +11,7 @@ const StyledHeader = styled.nav`
   grid-auto-flow: dense;
   align-items: center;
   justify-items: center;
-  background-color: #e23636;
+  background-color: ${({ theme }) => theme.primary};
   padding: 40px;
 
   > h3 {
@@ -17,13 +19,13 @@ const StyledHeader = styled.nav`
   }
 
   .is-active {
-    color: #518cca;
-    background: #f7f6e7;
+    color: ${({ theme }) => theme.secondary};
+    background: ${({ theme }) => theme.background};
     margin: 20px;
   }
 
   .different-active {
-    color: #504a4a;
+    color: ${({ theme }) => theme.third};
     text-decoration: none;
   }
 `;
@@ -88,7 +90,7 @@ const NavLinkStyled = styled(NavLink)`
 
 const HomeLinkStyled = styled(NavLink)`
   font-size: 3em;
-  color: #a8a9ad;
+  color: ${({ theme }) => theme.secondary};
   margin: 20px;
   text-decoration: none;
   padding: 20px;
@@ -111,13 +113,18 @@ const NormalLinksStyled = styled.div`
   }
 `;
 const Header = () => {
+  const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log(menuOpen);
+  const { id, setTheme } = useContext(ThemeContext);
+  console.log(id);
   return (
     <StyledHeader>
       <MobileMenuIcon onClick={() => setMenuOpen(prevState => !prevState)}>
         <MobileHomeLinkStyled exact to="/" activeClassName="different-active">
           <h1>Marvel</h1>
+          {pathname === "/" ? (
+            <Toggle isActive={id === "xmen"} onToggle={setTheme} />
+          ) : null}
         </MobileHomeLinkStyled>
         <div>{menuOpen ? <h2>Close Menu</h2> : <h2>Open Menu</h2>}</div>
         <MobileListStyled open={menuOpen}>
@@ -163,6 +170,9 @@ const Header = () => {
             open={menuOpen}
           >
             <h1>Marvel</h1>
+            {pathname === "/" ? (
+              <Toggle isActive={id === "xmen"} onToggle={setTheme} />
+            ) : null}
           </HomeLinkStyled>
         </ListItemStyled>
         <NormalLinksStyled>

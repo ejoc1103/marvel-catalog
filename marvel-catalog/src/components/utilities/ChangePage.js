@@ -10,7 +10,7 @@ const ChangePageStyled = styled.div`
     width: 350px;
     height: 60px;
     border-radius: 15%;
-    background-color: #e23636;
+    background-color: ${({ theme }) => theme.primary};
     font-size: 2em;
   }
 

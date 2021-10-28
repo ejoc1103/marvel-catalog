@@ -41,7 +41,7 @@ const LinkStyled = styled(Link)`
   text-decoration: none;
 
   > h1 {
-    color: #e23636;
+    color: ${({ theme }) => theme.primary};
     text-decoration: underline white;
     text-align: start;
   }
@@ -89,7 +89,20 @@ const DisplayList = ({
     }
     callApi(pathname, setLoading, setContent, limit, order, page, params);
     setContentType("/creators");
-  }, [limit, order, setContent, setLoading, page, params, pathname, contentType, setContentType, setOrder, setParams, setPage]);
+  }, [
+    limit,
+    order,
+    setContent,
+    setLoading,
+    page,
+    params,
+    pathname,
+    contentType,
+    setContentType,
+    setOrder,
+    setParams,
+    setPage,
+  ]);
   //function for working changing pages
   function handleClick(event) {
     const name = event.target.name;

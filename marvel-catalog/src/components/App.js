@@ -5,9 +5,10 @@ import HomePage from "./mainPages/HomePage";
 import MatchGame from "./matchGame/MatchGame";
 import DisplayPage from "./mainPages/DisplayPage";
 import DisplayList from "./mainPages/DisplayList";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import DetailPage from "./mainPages/detailPage/DetailPage";
-
+import AvengersTheme from "../themes/avengers";
+import XmenTheme from "../themes/xmen";
 const GlobalStyle = createGlobalStyle`
   *{
   margin: 0;
@@ -15,8 +16,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  background-color: #4e4d5c;
-  background-image: url("https://www.transparenttextures.com/patterns/dark-brick-wall.png");
+  background-color: ${({ theme }) => theme.background};
   font-family: 'Permanent Marker', cursive;
 }
 `;
@@ -38,133 +38,146 @@ const App = () => {
     search: "",
   });
   const [contentType, setContentType] = useState("");
-  return (
-    <MainStyled>
-      <GlobalStyle />
-      <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/characters/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/characters">
-            <DisplayPage
-              content={content}
-              setContent={setContent}
-              loading={loading}
-              setLoading={setLoading}
-              order={order}
-              setOrder={setOrder}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              params={params}
-              setParams={setParams}
-              setContentType={setContentType}
-            />
-          </Route>
-          <Route path="/comics/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/comics">
-            <DisplayPage
-              content={content}
-              setContent={setContent}
-              loading={loading}
-              setLoading={setLoading}
-              order={order}
-              setOrder={setOrder}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              params={params}
-              setParams={setParams}
-              setContentType={setContentType}
-            />
-          </Route>
-          <Route path="/events/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/events">
-            <DisplayPage
-              content={content}
-              setContent={setContent}
-              loading={loading}
-              setLoading={setLoading}
-              order={order}
-              setOrder={setOrder}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              params={params}
-              setParams={setParams}
-              setContentType={setContentType}
-            />
-          </Route>
-          <Route path="/series/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/series">
-            <DisplayPage
-              content={content}
-              setContent={setContent}
-              loading={loading}
-              setLoading={setLoading}
-              order={order}
-              setOrder={setOrder}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              params={params}
-              setParams={setParams}
-              setContentType={setContentType}
-            />
-          </Route>
-          <Route path="/creators/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/creators">
-            <DisplayList
-              content={content}
-              setContent={setContent}
-              loading={loading}
-              setLoading={setLoading}
-              order={order}
-              setOrder={setOrder}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              params={params}
-              setParams={setParams}
-              contentType={contentType}
-              setContentType={setContentType}
-            />
-          </Route>
-          <Route path="/matchgame/:nameId">
-            <DetailPage />
-          </Route>
-          <Route path="/matchgame">
-            <MatchGame
-              setContent={setContent}
-              content={content}
-              params={params}
-            />
-          </Route>
 
-          <Route path="*">
-            <h1>Page Does not exist</h1>
-          </Route>
-        </Switch>
-      </Router>
-    </MainStyled>
+  const [theme, setTheme] = useState(AvengersTheme);
+  return (
+    <ThemeProvider
+      theme={{
+        ...theme,
+        setTheme: () => {
+          setTheme(prev =>
+            prev.id === "avengers" ? XmenTheme : AvengersTheme
+          );
+        },
+      }}
+    >
+      <MainStyled>
+        <GlobalStyle />
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/characters/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/characters">
+              <DisplayPage
+                content={content}
+                setContent={setContent}
+                loading={loading}
+                setLoading={setLoading}
+                order={order}
+                setOrder={setOrder}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                params={params}
+                setParams={setParams}
+                setContentType={setContentType}
+              />
+            </Route>
+            <Route path="/comics/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/comics">
+              <DisplayPage
+                content={content}
+                setContent={setContent}
+                loading={loading}
+                setLoading={setLoading}
+                order={order}
+                setOrder={setOrder}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                params={params}
+                setParams={setParams}
+                setContentType={setContentType}
+              />
+            </Route>
+            <Route path="/events/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/events">
+              <DisplayPage
+                content={content}
+                setContent={setContent}
+                loading={loading}
+                setLoading={setLoading}
+                order={order}
+                setOrder={setOrder}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                params={params}
+                setParams={setParams}
+                setContentType={setContentType}
+              />
+            </Route>
+            <Route path="/series/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/series">
+              <DisplayPage
+                content={content}
+                setContent={setContent}
+                loading={loading}
+                setLoading={setLoading}
+                order={order}
+                setOrder={setOrder}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                params={params}
+                setParams={setParams}
+                setContentType={setContentType}
+              />
+            </Route>
+            <Route path="/creators/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/creators">
+              <DisplayList
+                content={content}
+                setContent={setContent}
+                loading={loading}
+                setLoading={setLoading}
+                order={order}
+                setOrder={setOrder}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                params={params}
+                setParams={setParams}
+                contentType={contentType}
+                setContentType={setContentType}
+              />
+            </Route>
+            <Route path="/matchgame/:nameId">
+              <DetailPage />
+            </Route>
+            <Route path="/matchgame">
+              <MatchGame
+                setContent={setContent}
+                content={content}
+                params={params}
+              />
+            </Route>
+
+            <Route path="*">
+              <h1>Page Does not exist</h1>
+            </Route>
+          </Switch>
+        </Router>
+      </MainStyled>
+    </ThemeProvider>
   );
 };
 

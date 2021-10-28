@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactCardFlip from "react-card-flip";
-import pic from "../../images/Captain_America_Shield.png";
-import styled from "styled-components";
+import pic1 from "../../images/Captain_America_Shield.png";
+import pic2 from "../../images/wolverine.jpg";
+import styled, { ThemeContext } from "styled-components";
 
 //Uses the react-card-flip npm package to flip cards that have characters
 //on one side and a stock photo for the backs
@@ -30,44 +31,51 @@ const ImgStyled = styled.img`
     }};
   }
 `;
-const Card = ({ id, isFlipped, handleClick, index, front, matched, level }) => (
-  <ReactCardFlip
-    isFlipped={isFlipped}
-    flipSpeedBackToFront={1}
-    flipSpeedFrontToBack={1}
-  >
-    <button id={id} onClick={handleClick} key="front">
-      <ImgStyled
-        src={pic}
-        alt="back of card"
-        className="cardImage"
-        level={level}
-      />
-    </button>
-    {matched.includes(index) ? (
-      <ImgStyled
-        className="cardImage"
-        id={id}
-        name={index}
-        src={front.path + "/portrait_xlarge." + front.extension}
-        alt={`Pic of ${front.name}`}
-        level={level}
-      ></ImgStyled>
-    ) : (
-      <button id={id} onClick={handleClick} key="back">
-        <div>
-          <ImgStyled
-            className="cardImage"
-            id={id}
-            name={index}
-            src={front.path + "/portrait_xlarge." + front.extension}
-            alt={`Pic of ${front.name}`}
-            level={level}
-          ></ImgStyled>
-        </div>
+const Card = ({ id, isFlipped, handleClick, index, front, matched, level }) => {
+  const theme = useContext(ThemeContext);
+  let pic = pic1;
+  if (theme.id !== "avengers") {
+    pic = pic2;
+  }
+  return (
+    <ReactCardFlip
+      isFlipped={isFlipped}
+      flipSpeedBackToFront={1}
+      flipSpeedFrontToBack={1}
+    >
+      <button id={id} onClick={handleClick} key="front">
+        <ImgStyled
+          src={pic}
+          alt="back of card"
+          className="cardImage"
+          level={level}
+        />
       </button>
-    )}
-  </ReactCardFlip>
-);
+      {matched.includes(index) ? (
+        <ImgStyled
+          className="cardImage"
+          id={id}
+          name={index}
+          src={front.path + "/portrait_xlarge." + front.extension}
+          alt={`Pic of ${front.name}`}
+          level={level}
+        ></ImgStyled>
+      ) : (
+        <button id={id} onClick={handleClick} key="back">
+          <div>
+            <ImgStyled
+              className="cardImage"
+              id={id}
+              name={index}
+              src={front.path + "/portrait_xlarge." + front.extension}
+              alt={`Pic of ${front.name}`}
+              level={level}
+            ></ImgStyled>
+          </div>
+        </button>
+      )}
+    </ReactCardFlip>
+  );
+};
 
 export default Card;
