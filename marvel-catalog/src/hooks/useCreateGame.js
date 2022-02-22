@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-
-import axios from "axios";
-import { timestamp, publicKey, hash } from "../utils";
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import env from 'react-dotenv';
+import md5 from 'md5';
+import axios from 'axios';
 
 const useCreateGame = (reset, level) => {
   const [temp, setTemp] = useState([]);
@@ -9,6 +9,9 @@ const useCreateGame = (reset, level) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const date = new Date();
+    const timeStamp = date.getTime();
+    const hash = md5(timeStamp + env.PRIVATE_KEY + env.PUBLIC_KEY);
     const offset = Math.floor(Math.random() * 1394);
     const fetchData = async () => {
       if (error) {
@@ -16,14 +19,14 @@ const useCreateGame = (reset, level) => {
       }
       try {
         const result = await axios.get(
-          `http://gateway.marvel.com/v1/public/characters?limit=100&offset=${offset}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
+          `http://gateway.marvel.com/v1/public/characters?limit=100&offset=${offset}&ts=${timeStamp}&apikey=${env.PUBLIC_KEY}&hash=${hash}`
         );
         setLoading(false);
         setTemp(result.data.data.results);
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setError("ERR.");
+        setError('ERR.');
       }
     };
     fetchData();
@@ -33,9 +36,9 @@ const useCreateGame = (reset, level) => {
     temp.filter(
       char =>
         char.thumbnail.path !==
-          "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" &&
+          'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available' &&
         char.thumbnail.path !==
-          "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708"
+          'http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708'
     ),
     [temp]
   );

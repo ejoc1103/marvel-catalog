@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Loading from "../Loading";
-import styled from "styled-components";
-import { timestamp, publicKey, hash } from "../../../utils";
-import { useLocation } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Loading from '../Loading';
+import styled from 'styled-components';
+import env from 'react-dotenv';
+import md5 from 'md5';
+import { useLocation } from 'react-router-dom';
 
 //Styled Components
 const DetailPageStyled = styled.div`
@@ -49,11 +49,14 @@ const DetailPage = () => {
   const { pathname } = useLocation();
   //Get's data for specific selection when pulling the detail page
   useEffect(() => {
+    const date = new Date();
+    const timeStamp = date.getTime();
+    const hash = md5(timeStamp + env.PRIVATE_KEY + env.PUBLIC_KEY);
     const getData = async () => {
       if (error) setError(false);
       try {
         const res = await axios.get(
-          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`
+          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${env.PUBLIC_KEY}&hash=${hash}`
         );
 
         setLoading(false);
@@ -61,7 +64,7 @@ const DetailPage = () => {
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setError("ERR.");
+        setError('ERR.');
       }
     };
     getData();
@@ -70,12 +73,12 @@ const DetailPage = () => {
   // discern out the name from type of parameter
   const getName = typeOfParam => {
     if (subject) {
-      if (typeOfParam.includes("/creators")) return subject.fullName;
-      if (typeOfParam.includes("/characters")) return subject.name;
+      if (typeOfParam.includes('/creators')) return subject.fullName;
+      if (typeOfParam.includes('/characters')) return subject.name;
       return subject.title;
     }
   };
-  
+
   const name = getName(pathname);
 
   if (loading || !subject) return <Loading />;
@@ -85,10 +88,10 @@ const DetailPage = () => {
       <>
         <div>
           <img
-            className="book"
+            className='book'
             src={
               subject.thumbnail.path +
-              "/portrait_uncanny." +
+              '/portrait_uncanny.' +
               subject.thumbnail.extension
             }
             alt={`Pic of ${subject.name}`}
@@ -119,7 +122,7 @@ const DetailPage = () => {
                 <h1>Events</h1>
                 {subject.events.items.map((item, index) => (
                   <h2 key={index}>{item.name}</h2>
-                ))}{" "}
+                ))}{' '}
               </div>
             ) : null}
           </>
@@ -148,7 +151,7 @@ const DetailPage = () => {
               <h2 key={index}>{item.name}</h2>
             ))}
           </div>
-        ) : null}{" "}
+        ) : null}{' '}
       </>
     </DetailPageStyled>
   );
