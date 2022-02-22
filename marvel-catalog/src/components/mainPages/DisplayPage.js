@@ -14,9 +14,6 @@ const PageStyled = styled.div`
   grid-gap: 20px;
   text-align: center;
   margin: 50px;
-  pre {
-    display: none;
-  }
 `;
 
 const DisplayGridStyled = styled.div`
@@ -163,7 +160,6 @@ function DisplayPage({
         })}
       </DisplayGridStyled>
       <ChangePage click={handleClick} />
-      <pre>{JSON.stringify(process.env, undefined, 2)}</pre>
     </PageStyled>
   );
 }
