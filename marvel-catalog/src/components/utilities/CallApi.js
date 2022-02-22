@@ -2,8 +2,6 @@ import axios from 'axios';
 import env from 'react-dotenv';
 import md5 from 'md5';
 
-console.log(env.PUBLIC_KEY);
-
 const callApi = (
   pathname,
   setLoading,

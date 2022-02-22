@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import ChangePage from "../utilities/ChangePage";
-import styled from "styled-components";
-import Search from "../utilities/Search";
-import Loading from "../mainPages/Loading";
-import callApi from "../utilities/callApi";
-import { NavLink, useLocation } from "react-router-dom";
+import React, { useEffect } from 'react';
+import ChangePage from '../utilities/ChangePage';
+import styled from 'styled-components';
+import Search from '../utilities/Search';
+import Loading from '../mainPages/Loading';
+import callApi from '../utilities/callApi';
+import { NavLink, useLocation } from 'react-router-dom';
 //Main component for showing the collections on everthing but creators
 
 //Styles with styled components
@@ -14,6 +14,9 @@ const PageStyled = styled.div`
   grid-gap: 20px;
   text-align: center;
   margin: 50px;
+  pre {
+    display: none;
+  }
 `;
 
 const DisplayGridStyled = styled.div`
@@ -66,10 +69,10 @@ function DisplayPage({
   //Resets the search type and ordering selection to avoid errors when switching
   //between collections
   useEffect(() => {
-    setOrder("");
+    setOrder('');
     setParams({
-      type: "",
-      search: "",
+      type: '',
+      search: '',
     });
     setPage(0);
   }, [setOrder, pathname, setParams, setPage]);
@@ -102,11 +105,11 @@ function DisplayPage({
   function handleClick(event) {
     const name = event.target.name;
     if (page !== 0) {
-      if (name === "back" && page !== 0) {
+      if (name === 'back' && page !== 0) {
         setPage(page - 1);
       }
     }
-    if (name === "forward") {
+    if (name === 'forward') {
       setPage(page + 1);
     }
   }
@@ -135,7 +138,7 @@ function DisplayPage({
                 <img
                   src={
                     name.thumbnail.path +
-                    "/portrait_fantastic." +
+                    '/portrait_fantastic.' +
                     name.thumbnail.extension
                   }
                   alt={`Pic of ${name.name}`}
@@ -160,6 +163,7 @@ function DisplayPage({
         })}
       </DisplayGridStyled>
       <ChangePage click={handleClick} />
+      <pre>{JSON.stringify(process.env, undefined, 2)}</pre>
     </PageStyled>
   );
 }
