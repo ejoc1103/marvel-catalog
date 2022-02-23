@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import photo from "../../images/homepagephoto.jpg";
+import React from 'react';
+import styled from 'styled-components';
+import photo from '../../images/homepagephoto.jpg';
 
 const HomePageStyled = styled.div`
   display: grid;
@@ -22,13 +22,15 @@ const ImageStyled = styled.img`
 `;
 
 const HomePage = () => {
+  console.log(process.env.REACT_APP_PRIVATE_KEY);
+  console.log(process.env.REACT_APP_PUBLIC_KEY);
   return (
     <HomePageStyled>
       <h1>Welcome Home</h1>
       <p>
         Please browse around through Marvel's collections or play the Match Game
       </p>
-      <ImageStyled src={photo} alt="Marvel Heros Motif" />
+      <ImageStyled src={photo} alt='Marvel Heros Motif' />
     </HomePageStyled>
   );
 };

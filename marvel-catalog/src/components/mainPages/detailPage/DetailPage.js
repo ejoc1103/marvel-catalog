@@ -51,12 +51,14 @@ const DetailPage = () => {
   useEffect(() => {
     const date = new Date();
     const timeStamp = date.getTime();
-    const hash = md5(timeStamp + env.PRIVATE_KEY + env.PUBLIC_KEY);
+    const hash = md5(
+      timeStamp + env.PRIVATE_KEY + process.env.REACT_APP_PRIVATE_PUBLIC_KEY
+    );
     const getData = async () => {
       if (error) setError(false);
       try {
         const res = await axios.get(
-          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${env.PUBLIC_KEY}&hash=${hash}`
+          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PRIVATE_PUBLIC_KEY}&hash=${hash}`
         );
 
         setLoading(false);

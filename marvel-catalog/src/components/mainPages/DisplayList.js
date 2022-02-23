@@ -3,7 +3,7 @@ import ChangePage from "../utilities/ChangePage";
 import styled from "styled-components";
 import Search from "../utilities/Search";
 import Loading from "../mainPages/Loading";
-import callApi from "../utilities/callApi";
+import CallApi from "../utilities/CallApi";
 import { Link, useLocation } from "react-router-dom";
 //Component for the creators page Needs to be different becasue its all writing and no imgages
 
@@ -87,7 +87,7 @@ const DisplayList = ({
       });
       setPage(0);
     }
-    callApi(pathname, setLoading, setContent, limit, order, page, params);
+    CallApi(pathname, setLoading, setContent, limit, order, page, params);
     setContentType("/creators");
   }, [
     limit,

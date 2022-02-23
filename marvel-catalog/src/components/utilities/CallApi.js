@@ -1,8 +1,7 @@
 import axios from 'axios';
-import env from 'react-dotenv';
 import md5 from 'md5';
 
-const callApi = (
+const CallApi = (
   pathname,
   setLoading,
   setContent,
@@ -15,7 +14,11 @@ const callApi = (
 
   const timeStamp = date.getTime();
 
-  const hash = md5(timeStamp + env.PRIVATE_KEY + env.PUBLIC_KEY);
+  const hash = md5(
+    timeStamp +
+      process.env.REACT_APP_PRIVATE_KEY +
+      process.env.REACT_APP_PUBLIC_KEY
+  );
 
   const fetchData = async () => {
     setLoading(true);
@@ -24,7 +27,9 @@ const callApi = (
         params.type + params.search
       }orderBy=${order}&limit=${limit}&offset=${
         pathname === '/matchgame' ? page : limit * page
-      }&ts=${timeStamp}&apikey=${env.PUBLIC_KEY}&hash=${hash}`
+      }&ts=${timeStamp}&apikey=${
+        process.env.REACT_APP_PUBLIC_KEY
+      }&hash=${hash}`
     );
     setContent(result.data.data.results);
     setLoading(false);
@@ -33,4 +38,4 @@ const callApi = (
   fetchData();
 };
 
-export default callApi;
+export default CallApi;

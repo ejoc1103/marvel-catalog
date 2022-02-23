@@ -3,7 +3,7 @@ import ChangePage from '../utilities/ChangePage';
 import styled from 'styled-components';
 import Search from '../utilities/Search';
 import Loading from '../mainPages/Loading';
-import callApi from '../utilities/callApi';
+import CallApi from '../utilities/CallApi';
 import { NavLink, useLocation } from 'react-router-dom';
 //Main component for showing the collections on everthing but creators
 
@@ -75,7 +75,7 @@ function DisplayPage({
   }, [setOrder, pathname, setParams, setPage]);
   //call the function that calls the api to get characters, comics ...
   useEffect(() => {
-    callApi(
+    CallApi(
       pathname,
       setLoading,
       setContent,
