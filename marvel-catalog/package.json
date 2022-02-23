@@ -40,6 +40,11 @@
       "last 1 safari version"
     ]
   },
+  "react-dotenv": {
+    "whitelist": [
+      "API_URL"
+    ]
+  },
   "devDependencies": {
     "eslint": "^6.6.0"
   }
