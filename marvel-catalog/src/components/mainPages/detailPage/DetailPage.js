@@ -57,7 +57,7 @@ const DetailPage = () => {
       if (error) setError(false);
       try {
         const res = await axios.get(
-          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PRIVATE_PUBLIC_KEY}&hash=${hash}`
+          `http://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
         );
 
         setLoading(false);
