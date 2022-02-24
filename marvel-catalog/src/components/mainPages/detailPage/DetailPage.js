@@ -51,7 +51,7 @@ const DetailPage = () => {
     const date = new Date();
     const timeStamp = date.getTime();
     const hash = md5(
-      timeStamp + process.env.REACT_APP_PRIVATE_KEY + process.env.REACT_APP_PRIVATE_PUBLIC_KEY
+      timeStamp + process.env.REACT_APP_PRIVATE_KEY + process.env.REACT_APP_PUBLIC_KEY
     );
     const getData = async () => {
       if (error) setError(false);
