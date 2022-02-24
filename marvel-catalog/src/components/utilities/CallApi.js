@@ -27,9 +27,7 @@ const CallApi = (
         params.type + params.search
       }orderBy=${order}&limit=${limit}&offset=${
         pathname === '/matchgame' ? page : limit * page
-      }&ts=${timeStamp}&apikey=${
-        process.env.REACT_APP_PUBLIC_KEY
-      }&hash=${hash}`
+      }&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
     );
     setContent(result.data.data.results);
     setLoading(false);

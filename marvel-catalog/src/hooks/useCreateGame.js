@@ -6,7 +6,6 @@ const useCreateGame = (reset, level) => {
   const [temp, setTemp] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newArr, setNewArr] = useState([]);
 
   useEffect(() => {
     const date = new Date();
@@ -35,31 +34,31 @@ const useCreateGame = (reset, level) => {
     };
     fetchData();
   }, [error, reset, level]);
-
-  const createArr = useCallback(() => {
-    let filtered = temp.filter(
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  const newArr = useCallback(
+    temp.filter(
       char =>
         char.thumbnail.path !==
           'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available' &&
         char.thumbnail.path !==
           'http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708'
-    );
-    setNewArr(filtered);
-    return filtered;
-  }, [temp]);
+    ),
+    [temp]
+  );
 
-  useEffect(() => {
-    if (newArr.length > 0) {
-      let characters = [...newArr].sort(() => Math.random() - 0.05);
-      characters = newArr.slice(0, parseInt(level) / 2);
-      characters = characters.concat(characters);
-      let finalSort = [...characters].sort(() => Math.random() - 0.5);
+  const createCharacters = useCallback(() => {
+    let characters = [...newArr].sort(() => Math.random() - 0.05);
+    characters = newArr.slice(0, parseInt(level) / 2);
+    characters = characters.concat(characters);
+    let finalSort = [...characters].sort(() => Math.random() - 0.5);
 
-      return finalSort;
-    }
-  }, [newArr, level]);
+    return finalSort;
+  }, [level, newArr]);
 
-  const memoizedValue = useMemo(() => createArr(), [createArr]);
+  const memoizedValue = useMemo(
+    () => createCharacters(newArr),
+    [createCharacters, newArr]
+  );
 
   const collection = memoizedValue.map(character => ({
     id: character.id,
