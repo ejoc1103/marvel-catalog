@@ -22,7 +22,7 @@ const useCreateGame = (reset, level) => {
       }
       try {
         const result = await axios.get(
-          `http://gateway.marvel.com/v1/public/characters?limit=100&offset=${offset}&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
+          `https://gateway.marvel.com/v1/public/characters?limit=100&offset=${offset}&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
         );
         setLoading(false);
         setTemp(result.data.data.results);
