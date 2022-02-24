@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import YouWon from "./YouWon";
-import Card from "./Card";
-import Loading from "../mainPages/Loading";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import YouWon from './YouWon';
+import Card from './Card';
+import Loading from '../mainPages/Loading';
+import styled from 'styled-components';
 
-import useCreateGame from "../../hooks/useCreateGame";
+import useCreateGame from '../../hooks/useCreateGame';
 
 const MainGameStyled = styled.div`
   display: grid;
@@ -26,12 +26,12 @@ const MainGameStyled = styled.div`
 const GameBoardStyled = styled.div`
   display: grid;
   grid-template-columns: ${({ level }) => {
-    if (level === "40") {
-      return "repeat(10, auto)";
-    } else if (level === "20") {
-      return "repeat(5, auto)";
+    if (level === '40') {
+      return 'repeat(10, auto)';
+    } else if (level === '20') {
+      return 'repeat(5, auto)';
     } else {
-      return "repeat(4, auto)";
+      return 'repeat(4, auto)';
     }
   }};
   padding-bottom: 40px;
@@ -45,11 +45,10 @@ function MatchGame() {
   const [names, setNames] = useState([]);
   const [clickCount, setClickCount] = useState(0);
   const [checks, setChecks] = useState(0);
-  const [level, setLevel] = useState("20");
+  const [level, setLevel] = useState('20');
   const { collection, setLoading, loading } = useCreateGame(reset, level);
   //Reset to a new game after user clicks play again on YouWon page
   const resetGame = () => {
-    console.log("Reset Game");
     setMatched([]);
     setCheckers([]);
     setReset(!reset);
@@ -131,10 +130,10 @@ function MatchGame() {
         <>
           <h2>Attempts: {clickCount}</h2>
           <button onClick={() => resetGame()}>Reset Game</button>
-          <select name="level" id="level" onChange={handleChange} value={level}>
-            <option value="20">Normal</option>
-            <option value="12">Easy</option>
-            <option value="40">Hard</option>
+          <select name='level' id='level' onChange={handleChange} value={level}>
+            <option value='20'>Normal</option>
+            <option value='12'>Easy</option>
+            <option value='40'>Hard</option>
           </select>
         </>
       ) : null}
@@ -157,7 +156,7 @@ function MatchGame() {
                 index={index}
                 id={card.id}
                 front={card.front}
-                back="back"
+                back='back'
                 isFlipped={collectionFlips[index]}
                 handleClick={checks < 2 ? () => handleClick(index) : null}
                 matched={matched}

@@ -22,7 +22,6 @@ const ImageStyled = styled.img`
 `;
 
 const HomePage = () => {
-  console.log(process.env.REACT_APP_PRIVATE_KEY + "      " + process.env.REACT_APP_PUBLIC_KEY)
   return (
     <HomePageStyled>
       <h1>Welcome Home</h1>

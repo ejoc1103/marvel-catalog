@@ -86,7 +86,6 @@ function DisplayPage({
       setParams
     );
     setContentType(pathname);
-    console.log('Did this run?');
   }, [
     limit,
     order,
