@@ -20,8 +20,7 @@ const StyledHeader = styled.nav`
 
   .is-active {
     color: ${({ theme }) => theme.secondary};
-    background: ${({ theme }) => theme.background};
-    margin: 20px;
+    background: ${({ theme }) => theme.third};
   }
 
   .different-active {
@@ -84,7 +83,6 @@ const NavLinkStyled = styled(NavLink)`
   justify-self: end;
   align-self: center;
   justify-content: center;
-  padding: 15px;
   margin-right: 0;
 `;
 

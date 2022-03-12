@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "./utilities/Header";
-import HomePage from "./mainPages/HomePage";
-import MatchGame from "./matchGame/MatchGame";
-import DisplayPage from "./mainPages/DisplayPage";
-import DisplayList from "./mainPages/DisplayList";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import DetailPage from "./mainPages/detailPage/DetailPage";
-import AvengersTheme from "../themes/avengers";
-import XmenTheme from "../themes/xmen";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Header from './utilities/Header';
+import HomePage from './mainPages/HomePage';
+import MatchGame from './matchGame/MatchGame';
+import DisplayPage from './mainPages/DisplayPage';
+import DisplayList from './mainPages/DisplayList';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import DetailPage from './mainPages/detailPage/DetailPage';
+import AvengersTheme from '../themes/avengers';
+import XmenTheme from '../themes/xmen';
 const GlobalStyle = createGlobalStyle`
   *{
   margin: 0;
@@ -30,14 +30,14 @@ const MainStyled = styled.div`
 const App = () => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState('');
   const [limit, setLimit] = useState(8);
   const [page, setPage] = useState(0);
   const [params, setParams] = useState({
-    type: "",
-    search: "",
+    type: '',
+    search: '',
   });
-  const [contentType, setContentType] = useState("");
+  const [contentType, setContentType] = useState('');
 
   const [theme, setTheme] = useState(AvengersTheme);
   return (
@@ -46,7 +46,7 @@ const App = () => {
         ...theme,
         setTheme: () => {
           setTheme(prev =>
-            prev.id === "avengers" ? XmenTheme : AvengersTheme
+            prev.id === 'avengers' ? XmenTheme : AvengersTheme
           );
         },
       }}
@@ -56,13 +56,13 @@ const App = () => {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/">
+            <Route exact path='/'>
               <HomePage />
             </Route>
-            <Route path="/characters/:nameId">
+            <Route path='/characters/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/characters">
+            <Route path='/characters'>
               <DisplayPage
                 content={content}
                 setContent={setContent}
@@ -79,10 +79,10 @@ const App = () => {
                 setContentType={setContentType}
               />
             </Route>
-            <Route path="/comics/:nameId">
+            <Route path='/comics/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/comics">
+            <Route path='/comics'>
               <DisplayPage
                 content={content}
                 setContent={setContent}
@@ -99,10 +99,10 @@ const App = () => {
                 setContentType={setContentType}
               />
             </Route>
-            <Route path="/events/:nameId">
+            <Route path='/events/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/events">
+            <Route path='/events'>
               <DisplayPage
                 content={content}
                 setContent={setContent}
@@ -119,10 +119,10 @@ const App = () => {
                 setContentType={setContentType}
               />
             </Route>
-            <Route path="/series/:nameId">
+            <Route path='/series/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/series">
+            <Route path='/series'>
               <DisplayPage
                 content={content}
                 setContent={setContent}
@@ -139,10 +139,10 @@ const App = () => {
                 setContentType={setContentType}
               />
             </Route>
-            <Route path="/creators/:nameId">
+            <Route path='/creators/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/creators">
+            <Route path='/creators'>
               <DisplayList
                 content={content}
                 setContent={setContent}
@@ -160,10 +160,10 @@ const App = () => {
                 setContentType={setContentType}
               />
             </Route>
-            <Route path="/matchgame/:nameId">
+            <Route path='/matchgame/:nameId'>
               <DetailPage />
             </Route>
-            <Route path="/matchgame">
+            <Route path='/matchgame'>
               <MatchGame
                 setContent={setContent}
                 content={content}
@@ -171,7 +171,7 @@ const App = () => {
               />
             </Route>
 
-            <Route path="*">
+            <Route path='*'>
               <h1>Page Does not exist</h1>
             </Route>
           </Switch>

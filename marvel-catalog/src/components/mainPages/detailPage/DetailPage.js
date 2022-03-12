@@ -3,7 +3,7 @@ import axios from 'axios';
 import Loading from '../Loading';
 import styled from 'styled-components';
 import md5 from 'md5';
-import { useLocation } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 
 //Styled Components
 const DetailPageStyled = styled.div`
@@ -39,6 +39,21 @@ const NameDescStyled = styled.div`
   }
 `;
 
+const ImgContainerStyled = styled.div`
+  display: grid;
+  @media (max-width: 600px) {
+    justify-items: center;
+  }
+`;
+const NavLinkStyled = styled(NavLink)`
+  color: black;
+  > a {
+    text-decoration: none;
+  }
+`;
+
+const InfoContainerStyled = styled.div``;
+
 const DetailPage = () => {
   //state setup
   const [subject, setSubject] = useState(null);
@@ -46,12 +61,15 @@ const DetailPage = () => {
   const [error, setError] = useState(null);
   //path pulled from location hook
   const { pathname } = useLocation();
+
   //Get's data for specific selection when pulling the detail page
   useEffect(() => {
     const date = new Date();
     const timeStamp = date.getTime();
     const hash = md5(
-      timeStamp + process.env.REACT_APP_PRIVATE_KEY + process.env.REACT_APP_PUBLIC_KEY
+      timeStamp +
+        process.env.REACT_APP_PRIVATE_KEY +
+        process.env.REACT_APP_PUBLIC_KEY
     );
     const getData = async () => {
       if (error) setError(false);
@@ -60,6 +78,9 @@ const DetailPage = () => {
           `https://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
         );
 
+        console.log(
+          `https://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
+        );
         setLoading(false);
         setSubject(res.data.data.results[0]);
       } catch (err) {
@@ -81,79 +102,91 @@ const DetailPage = () => {
   };
 
   const name = getName(pathname);
-
+  console.log(subject);
   if (loading || !subject) return <Loading />;
   if (error) return <div>{error}</div>;
+
   return (
     <DetailPageStyled>
-      <>
+      <ImgContainerStyled>
+        <img
+          className='book'
+          src={
+            subject.thumbnail.path +
+            '/portrait_uncanny.' +
+            subject.thumbnail.extension
+          }
+          alt={`Pic of ${subject.name}`}
+        />
+      </ImgContainerStyled>
+      <NameDescStyled>
+        <h1>{name}</h1>
         <div>
-          <img
-            className='book'
-            src={
-              subject.thumbnail.path +
-              '/portrait_uncanny.' +
-              subject.thumbnail.extension
-            }
-            alt={`Pic of ${subject.name}`}
-          />
+          {subject.description ? (
+            <p>{subject.description}</p>
+          ) : (
+            <p>No Description Currently Available</p>
+          )}
         </div>
-        <NameDescStyled>
-          <h1>{name}</h1>
-          <div>
-            {subject.description ? (
-              <p>{subject.description}</p>
-            ) : (
-              <p>No Description Currently Available</p>
-            )}
-          </div>
-        </NameDescStyled>
-        {subject.comics ? (
-          <div>
-            <h1>Comics</h1>
-            {subject.comics.items.map((item, index) => (
-              <h2 key={index}>{item.name}</h2>
-            ))}
-          </div>
-        ) : null}
-        {subject.events ? (
-          <>
-            {subject.events.length > 0 ? (
-              <div>
-                <h1>Events</h1>
-                {subject.events.items.map((item, index) => (
+      </NameDescStyled>
+      {subject.comics ? (
+        <InfoContainerStyled>
+          <h1>Comics</h1>
+          {subject.comics.items.map((item, index) => {
+            return (
+              <NavLinkStyled
+                key={index}
+                to={`../comics/${item.resourceURI.split('/').pop()}`}
+              >
+                <h2 key={index}>{item.name}</h2>
+              </NavLinkStyled>
+            );
+          })}
+        </InfoContainerStyled>
+      ) : null}
+      {subject.events ? (
+        <>
+          {subject.events.items.length > 0 ? (
+            <InfoContainerStyled>
+              <h1>Events</h1>
+              {subject.events.items.map((item, index) => (
+                <NavLinkStyled
+                  key={index}
+                  to={`../events/${item.resourceURI.split('/').pop()}`}
+                >
                   <h2 key={index}>{item.name}</h2>
-                ))}{' '}
-              </div>
-            ) : null}
-          </>
-        ) : null}
-        {subject.series ? (
-          <div>
-            {subject.series.name ? (
-              <div>
-                <h1>Series</h1>
+                </NavLinkStyled>
+              ))}{' '}
+            </InfoContainerStyled>
+          ) : null}
+        </>
+      ) : null}
+      {subject.series ? (
+        <div>
+          {subject.series.name ? (
+            <InfoContainerStyled>
+              <h1>Series</h1>
+              <NavLinkStyled
+                to={`../series/${subject.series.resourceURI.split('/').pop()}`}
+              >
                 <h2>{subject.series.name}</h2>
-              </div>
-            ) : (
-              <div>
-                <h1>Series</h1>
-                {subject.series.items.map((item, index) => (
+              </NavLinkStyled>
+            </InfoContainerStyled>
+          ) : (
+            <InfoContainerStyled>
+              <h1>Series</h1>
+              {subject.series.items.map((item, index) => (
+                <NavLinkStyled
+                  key={index}
+                  to={`../series/${item.resourceURI.split('/').pop()}`}
+                >
                   <h2 key={index}>{item.name}</h2>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : null}
-        {subject.stories ? (
-          <div>
-            <h1>Stories</h1>
-            {subject.stories.items.map((item, index) => (
-              <h2 key={index}>{item.name}</h2>
-            ))}
-          </div>
-        ) : null}{' '}
-      </>
+                </NavLinkStyled>
+              ))}
+            </InfoContainerStyled>
+          )}
+        </div>
+      ) : null}
     </DetailPageStyled>
   );
 };
