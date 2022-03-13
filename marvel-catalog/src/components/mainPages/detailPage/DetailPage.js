@@ -42,6 +42,7 @@ const NameDescStyled = styled.div`
 const ImgContainerStyled = styled.div`
   display: grid;
   @media (max-width: 600px) {
+    padding-top: 30px;
     justify-items: center;
   }
 `;
