@@ -60,6 +60,7 @@ const DetailPage = () => {
   const [subject, setSubject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [characterStats, setCharacterStats] = useState(null);
   //path pulled from location hook
   const { pathname } = useLocation();
 
@@ -79,9 +80,6 @@ const DetailPage = () => {
           `https://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
         );
 
-        console.log(
-          `https://gateway.marvel.com/v1/public${pathname}?&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
-        );
         setLoading(false);
         setSubject(res.data.data.results[0]);
       } catch (err) {
@@ -90,6 +88,26 @@ const DetailPage = () => {
         setError('ERR.');
       }
     };
+
+    // const getCharacterStats = async () => {
+    //   if (error) setError(false);
+    //   try {
+    //     const res = await axios.get(
+    //       `https://superheroapi.com/api.javascript/10159923994358166`
+    //     );
+
+    //     setLoading(false);
+    //     setCharacterStats(res);
+    //   } catch (err) {
+    //     console.log(err);
+    //     setLoading(false);
+    //     setError('ERR.');
+    //   }
+    // };
+
+    //   if (pathname.includes('/characters')) {
+    //     getCharacterStats();
+    //   }
     getData();
   }, [error, pathname]);
 
@@ -106,7 +124,7 @@ const DetailPage = () => {
   console.log(subject);
   if (loading || !subject) return <Loading />;
   if (error) return <div>{error}</div>;
-
+  console.log(characterStats);
   return (
     <DetailPageStyled>
       <ImgContainerStyled>
