@@ -60,7 +60,7 @@ const DetailPage = () => {
   const [subject, setSubject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [characterStats, setCharacterStats] = useState(null);
+  // const [characterStats, setCharacterStats] = useState(null);
   //path pulled from location hook
   const { pathname } = useLocation();
 
@@ -124,7 +124,7 @@ const DetailPage = () => {
   console.log(subject);
   if (loading || !subject) return <Loading />;
   if (error) return <div>{error}</div>;
-  console.log(characterStats);
+  // console.log(characterStats);
   return (
     <DetailPageStyled>
       <ImgContainerStyled>
