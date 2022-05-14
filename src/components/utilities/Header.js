@@ -5,21 +5,19 @@ import { useLocation } from 'react-router-dom';
 import Toggle from './Toggle';
 
 const StyledHeader = styled.nav`
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-flow: dense;
   align-items: center;
   justify-items: center;
   background-color: ${({ theme }) => theme.primary};
-  padding: 40px;
-
-  > h3 {
-    color: white;
-  }
+  padding: 10px;
+  height: 25vh;
+  z-index: 100;
 
   .is-active {
-    color: ${({ theme }) => theme.secondary};
+    color: ${({ theme }) => theme.background};
     background: ${({ theme }) => theme.third};
   }
 
@@ -32,9 +30,7 @@ const StyledHeader = styled.nav`
 const ListStyled = styled.ul`
   display: grid;
   width: 100%;
-
   grid-template-columns: 1fr 6fr;
-  gap: 20px;
   padding-right: 20px;
   list-style-type: none;
   top: 0;
@@ -43,7 +39,7 @@ const ListStyled = styled.ul`
   justify-self: center;
   margin-right: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     display: none;
   }
 `;
@@ -54,10 +50,17 @@ const MobileListStyled = styled.ul`
   text-align: center;
 `;
 
-const ListItemStyled = styled.li`
+const HomeItemStyled = styled.li`
   display: grid;
   color: white;
   text-align: center;
+`;
+
+const ListItemStyled = styled.li`
+  display: grid;
+  text-align: center;
+  background-color: ${({ theme }) => theme.third};
+  border: 5px solid ${({ theme }) => theme.secondary};
 `;
 
 const MobileMenuIcon = styled.div`
@@ -70,20 +73,20 @@ const MobileMenuIcon = styled.div`
     color: black;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 850px) {
     display: none;
   }
 `;
 
 const NavLinkStyled = styled(NavLink)`
-  color: white;
+  display: grid;
+  color: black;
   font-size: 1.2em;
   display: grid;
   width: 100%;
   justify-self: end;
   align-self: center;
   justify-content: center;
-  margin-right: 0;
 `;
 
 const HomeLinkStyled = styled(NavLink)`
@@ -92,7 +95,7 @@ const HomeLinkStyled = styled(NavLink)`
   margin: 20px;
   text-decoration: none;
   padding: 20px;
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     display: none;
   }
 `;
@@ -104,11 +107,15 @@ const MobileHomeLinkStyled = styled(NavLink)`
 `;
 const NormalLinksStyled = styled.div`
   display: grid;
+  gap: 15px;
   grid-template-columns: repeat(6, 1fr);
-  justify-self: end;
   @media (max-width: 1150px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
+`;
+const H3Styled = styled.h3`
+  text-align: center;
+  padding: 5px;
 `;
 const Header = () => {
   const { pathname } = useLocation();
@@ -128,39 +135,39 @@ const Header = () => {
         <MobileListStyled open={menuOpen}>
           <ListItemStyled>
             <NavLinkStyled to='/characters' activeClassName='is-active'>
-              <h3>Characters</h3>
+              <H3Styled>Characters</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/comics' activeClassName='is-active'>
-              <h3>Comics</h3>
+              <H3Styled>Comics</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/events' activeClassName='is-active'>
-              <h3>Events</h3>
+              <H3Styled>Events</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/series' activeClassName='is-active'>
-              <h3>Series</h3>
+              <H3Styled>Series</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/creators' activeClassName='is-active'>
-              <h3>Creators</h3>
+              <H3Styled>Creators</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/matchgame' activeClassName='is-active'>
-              <h3>Matching Game</h3>
+              <H3Styled>Matching Game</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
         </MobileListStyled>
       </MobileMenuIcon>
 
       <ListStyled open={menuOpen}>
-        <ListItemStyled>
+        <HomeItemStyled>
           <HomeLinkStyled
             exact
             to='/'
@@ -172,36 +179,36 @@ const Header = () => {
               <Toggle isActive={id === 'xmen'} onToggle={setTheme} />
             ) : null}
           </HomeLinkStyled>
-        </ListItemStyled>
+        </HomeItemStyled>
         <NormalLinksStyled>
           <ListItemStyled>
             <NavLinkStyled to='/characters' activeClassName='is-active'>
-              <h3>Characters</h3>
+              <H3Styled>Characters</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/comics' activeClassName='is-active'>
-              <h3>Comics</h3>
+              <H3Styled>Comics</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/events' activeClassName='is-active'>
-              <h3>Events</h3>
+              <H3Styled>Events</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/series' activeClassName='is-active'>
-              <h3>Series</h3>
+              <H3Styled>Series</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/creators' activeClassName='is-active'>
-              <h3>Creators</h3>
+              <H3Styled>Creators</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
             <NavLinkStyled to='/matchgame' activeClassName='is-active'>
-              <h3>Matching Game</h3>
+              <H3Styled>Matching Game</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
         </NormalLinksStyled>

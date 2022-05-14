@@ -25,6 +25,7 @@ const MainStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   justify-content: center;
+  height: 100vh;
 `;
 
 const App = () => {

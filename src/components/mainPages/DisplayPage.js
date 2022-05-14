@@ -20,7 +20,7 @@ const DisplayGridStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 40px;
-  @media (max-width: 768px) {
+  @media (max-width: 970px) {
     grid-template-columns: 1fr 1fr;
   }
   @media (max-width: 600px) {

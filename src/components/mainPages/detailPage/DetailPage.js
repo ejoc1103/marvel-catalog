@@ -41,6 +41,12 @@ const NameDescStyled = styled.div`
 
 const ImgContainerStyled = styled.div`
   display: grid;
+  justify-content: center;
+  > img {
+    border: 20px solid ${({ theme }) => theme.secondary};
+    background: ${({ theme }) => theme.third};
+    padding: 10px;
+  }
   @media (max-width: 600px) {
     padding-top: 30px;
     justify-items: center;
@@ -48,12 +54,17 @@ const ImgContainerStyled = styled.div`
 `;
 const NavLinkStyled = styled(NavLink)`
   color: black;
+  padding: 10px;
   > a {
     text-decoration: none;
   }
 `;
 
-const InfoContainerStyled = styled.div``;
+const InfoContainerStyled = styled.div`
+  height: 100%;
+  padding: 10px;
+  border: 10px solid ${({ theme }) => theme.secondary};
+`;
 
 const DetailPage = () => {
   //state setup
@@ -89,25 +100,6 @@ const DetailPage = () => {
       }
     };
 
-    // const getCharacterStats = async () => {
-    //   if (error) setError(false);
-    //   try {
-    //     const res = await axios.get(
-    //       `https://superheroapi.com/api.javascript/10159923994358166`
-    //     );
-
-    //     setLoading(false);
-    //     setCharacterStats(res);
-    //   } catch (err) {
-    //     console.log(err);
-    //     setLoading(false);
-    //     setError('ERR.');
-    //   }
-    // };
-
-    //   if (pathname.includes('/characters')) {
-    //     getCharacterStats();
-    //   }
     getData();
   }, [error, pathname]);
 
@@ -124,7 +116,7 @@ const DetailPage = () => {
   console.log(subject);
   if (loading || !subject) return <Loading />;
   if (error) return <div>{error}</div>;
-  // console.log(characterStats);
+
   return (
     <DetailPageStyled>
       <ImgContainerStyled>

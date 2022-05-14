@@ -6,6 +6,10 @@ const SearchStyled = styled.div`
   display: grid;
   justify-items: center;
   > form {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     > select {
       font-size: 1.4em;
     }
@@ -16,6 +20,11 @@ const SearchStyled = styled.div`
   > button {
     font-size: 1.4em;
     width: 30%;
+  }
+  @media (max-width: 950px) {
+    > form {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 `;
 const Search = ({ setParams, setOrder, setLimit, order, limit }) => {
