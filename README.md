@@ -1,4 +1,4 @@
-# GET-It-DONE
+# Marvel Catalog Viewer
 
 Hi! - welcome to _Marvel Catalog Viewer_!
 
