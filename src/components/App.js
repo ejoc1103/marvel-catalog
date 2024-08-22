@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './utilities/Header';
 import HomePage from './mainPages/HomePage';
 import MatchGame from './matchGame/MatchGame';
@@ -56,15 +56,13 @@ const App = () => {
         <GlobalStyle />
         <Router>
           <Header />
-          <Switch>
-            <Route exact path='/'>
-              <HomePage />
-            </Route>
-            <Route path='/characters/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/characters'>
-              <DisplayPage
+         <Routes>
+          
+       
+            <Route exact path='/' element={ <HomePage />} />
+            <Route path='/characters/:nameId' element={<DetailPage />}/>
+              
+            <Route path='/characters' element={              <DisplayPage
                 content={content}
                 setContent={setContent}
                 loading={loading}
@@ -78,13 +76,13 @@ const App = () => {
                 params={params}
                 setParams={setParams}
                 setContentType={setContentType}
-              />
-            </Route>
-            <Route path='/comics/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/comics'>
-              <DisplayPage
+              />} />
+
+         
+            <Route path='/comics/:nameId' element={  <DetailPage />}/>
+            
+        
+            <Route path='/comics' element={              <DisplayPage
                 content={content}
                 setContent={setContent}
                 loading={loading}
@@ -98,13 +96,11 @@ const App = () => {
                 params={params}
                 setParams={setParams}
                 setContentType={setContentType}
-              />
-            </Route>
-            <Route path='/events/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/events'>
-              <DisplayPage
+              />}/>
+            <Route path='/events/:nameId' element={<DetailPage/>}/>
+       
+    
+            <Route path='/events' element={              <DisplayPage
                 content={content}
                 setContent={setContent}
                 loading={loading}
@@ -118,13 +114,11 @@ const App = () => {
                 params={params}
                 setParams={setParams}
                 setContentType={setContentType}
-              />
-            </Route>
-            <Route path='/series/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/series'>
-              <DisplayPage
+              />}/>
+
+        
+            <Route path='/series/:nameId' element={<DetailPage/>} />
+            <Route path='/series' element={<DisplayPage
                 content={content}
                 setContent={setContent}
                 loading={loading}
@@ -138,13 +132,12 @@ const App = () => {
                 params={params}
                 setParams={setParams}
                 setContentType={setContentType}
-              />
-            </Route>
-            <Route path='/creators/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/creators'>
-              <DisplayList
+              />} />
+
+            
+            <Route path='/creators/:nameId' element={  <DetailPage />}/>
+          
+            <Route path='/creators' element={              <DisplayList
                 content={content}
                 setContent={setContent}
                 loading={loading}
@@ -159,23 +152,19 @@ const App = () => {
                 setParams={setParams}
                 contentType={contentType}
                 setContentType={setContentType}
-              />
-            </Route>
-            <Route path='/matchgame/:nameId'>
-              <DetailPage />
-            </Route>
-            <Route path='/matchgame'>
-              <MatchGame
+              />} />
+            <Route path='/matchgame/:nameId' element={ <DetailPage />} />
+            <Route path='/matchgame' element={             <MatchGame
                 setContent={setContent}
                 content={content}
                 params={params}
-              />
-            </Route>
+              />}/>
+ 
 
-            <Route path='*'>
-              <h1>Page Does not exist</h1>
-            </Route>
-          </Switch>
+            <Route path='*' element={<h1>Page Does not exist</h1>}/> 
+              
+       
+            </Routes>
         </Router>
       </MainStyled>
     </ThemeProvider>

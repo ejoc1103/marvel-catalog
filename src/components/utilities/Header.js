@@ -125,7 +125,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <MobileMenuIcon onClick={() => setMenuOpen(prevState => !prevState)}>
-        <MobileHomeLinkStyled exact to='/' activeClassName='different-active'>
+        <MobileHomeLinkStyled to='/' activeclassname='different-active' end>
           <h1>Marvel</h1>
           {pathname === '/' ? (
             <Toggle isActive={id === 'xmen'} onToggle={setTheme} />
@@ -134,32 +134,32 @@ const Header = () => {
         <div>{menuOpen ? <h2>Close Menu</h2> : <h2>Open Menu</h2>}</div>
         <MobileListStyled open={menuOpen}>
           <ListItemStyled>
-            <NavLinkStyled to='/characters' activeClassName='is-active'>
+            <NavLinkStyled to='/characters' activeclassmame='is-active'>
               <H3Styled>Characters</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/comics' activeClassName='is-active'>
+            <NavLinkStyled to='/comics' activeclassname='is-active'>
               <H3Styled>Comics</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/events' activeClassName='is-active'>
+            <NavLinkStyled to='/events' activeclassname='is-active'>
               <H3Styled>Events</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/series' activeClassName='is-active'>
+            <NavLinkStyled to='/series' activeclassname='is-active'>
               <H3Styled>Series</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/creators' activeClassName='is-active'>
+            <NavLinkStyled to='/creators' activeclassname='is-active'>
               <H3Styled>Creators</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/matchgame' activeClassName='is-active'>
+            <NavLinkStyled to='/matchgame' activeclassname='is-active'>
               <H3Styled>Matching Game</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
@@ -169,10 +169,10 @@ const Header = () => {
       <ListStyled open={menuOpen}>
         <HomeItemStyled>
           <HomeLinkStyled
-            exact
             to='/'
-            activeClassName='different-active'
+            activeclassname='different-active'
             open={menuOpen}
+            end
           >
             <h1>Marvel</h1>
             {pathname === '/' ? (
@@ -182,32 +182,32 @@ const Header = () => {
         </HomeItemStyled>
         <NormalLinksStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/characters' activeClassName='is-active'>
+            <NavLinkStyled to='/characters' activeclassname='is-active'>
               <H3Styled>Characters</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/comics' activeClassName='is-active'>
+            <NavLinkStyled to='/comics' activeclassname='is-active'>
               <H3Styled>Comics</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/events' activeClassName='is-active'>
+            <NavLinkStyled to='/events' activeclassname='is-active'>
               <H3Styled>Events</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/series' activeClassName='is-active'>
+            <NavLinkStyled to='/series' activeclassname='is-active'>
               <H3Styled>Series</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/creators' activeClassName='is-active'>
+            <NavLinkStyled to='/creators' activeclassname='is-active'>
               <H3Styled>Creators</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>
           <ListItemStyled>
-            <NavLinkStyled to='/matchgame' activeClassName='is-active'>
+            <NavLinkStyled to='/matchgame' activeclassname='is-active'>
               <H3Styled>Matching Game</H3Styled>
             </NavLinkStyled>
           </ListItemStyled>

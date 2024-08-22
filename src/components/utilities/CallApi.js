@@ -29,7 +29,6 @@ const CallApi = (
         pathname === '/matchgame' ? page : limit * page
       }&ts=${timeStamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
     );
-
     setContent(result.data.data.results);
     setLoading(false);
   };
